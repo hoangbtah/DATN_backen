@@ -30,3 +30,8 @@ E:\Web_Amis\web_AMIS\web_AMIS\obj\Debug\net6.0\refint\web_AMIS.dll
 E:\Web_Amis\web_AMIS\web_AMIS\obj\Debug\net6.0\web_AMIS.pdb
 E:\Web_Amis\web_AMIS\web_AMIS\obj\Debug\net6.0\web_AMIS.genruntimeconfig.cache
 E:\Web_Amis\web_AMIS\web_AMIS\obj\Debug\net6.0\ref\web_AMIS.dll
+E:\Web_Amis\web_AMIS\web_AMIS\bin\Debug\net6.0\Dapper.dll
+E:\Web_Amis\web_AMIS\web_AMIS\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\Web_Amis\web_AMIS\web_AMIS\bin\Debug\net6.0\MySqlConnector.dll
+E:\Web_Amis\web_AMIS\web_AMIS\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+E:\Web_Amis\web_AMIS\web_AMIS\obj\Debug\net6.0\web_AMIS.sourcelink.json
