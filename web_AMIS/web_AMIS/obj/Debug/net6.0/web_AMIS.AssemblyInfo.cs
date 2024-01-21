@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("web_AMIS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e3fc193aa086cd091713f1e13cd7b655bb020cb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("web_AMIS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("web_AMIS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

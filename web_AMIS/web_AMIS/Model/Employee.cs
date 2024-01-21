@@ -21,6 +21,7 @@
             
             } 
         }
+        
         public Guid DepartmentId { get; set; }
 
 
