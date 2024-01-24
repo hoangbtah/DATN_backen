@@ -1,0 +1,16 @@
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\bin\Debug\net6.0\MISA_WEBHAUI_Infrastructure.deps.json
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\bin\Debug\net6.0\MISA_WEBHAUI_Infrastructure.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\bin\Debug\net6.0\MISA_WEBHAUI_Infrastructure.pdb
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\bin\Debug\net6.0\MISA_WEBHAUI_AMIS_Core.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\bin\Debug\net6.0\MISA_WEBHAUI_AMIS_Core.pdb
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.csproj.AssemblyReference.cache
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.AssemblyInfoInputs.cache
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.AssemblyInfo.cs
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.csproj.CoreCompileInputs.cache
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.sourcelink.json
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.csproj.CopyComplete
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\refint\MISA_WEBHAUI_Infrastructure.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\MISA_WEBHAUI_Infrastructure.pdb
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Infrastructure\obj\Debug\net6.0\ref\MISA_WEBHAUI_Infrastructure.dll

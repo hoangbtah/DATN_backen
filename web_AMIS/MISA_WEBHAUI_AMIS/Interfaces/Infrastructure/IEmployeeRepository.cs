@@ -16,5 +16,6 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         int Delete(Guid employeeId);
         IEnumerable<Employee> Getpaging(int pageSize, int pageIndex);
         Employee Search(Guid employeeId);
+        bool CheckDuplicateCode(string employeeCode);
     }
 }

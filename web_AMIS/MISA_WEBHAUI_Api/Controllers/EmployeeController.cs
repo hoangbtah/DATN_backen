@@ -24,15 +24,13 @@ namespace MISA_WEBHAUI_Api.Controllers
         public IActionResult Get()
         {
             var employees= _employeeRepository.GetAll();
-
-            
             return Ok(employees);
         }
         [HttpGet("{employeeId}")]
         public IActionResult GetById(Guid employeeId)
         {
             var employee= _employeeRepository.GetbyId(employeeId);
-            return Ok();
+            return Ok(employee);
         }
         [HttpPost]
         public IActionResult Post(Employee employee)
@@ -54,9 +52,9 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                return StatusCode(500, ex.Message);
             }
-            return Ok();
+           
         }
         [HttpPut]
         public IActionResult Put(Guid employeeId,Employee employee)

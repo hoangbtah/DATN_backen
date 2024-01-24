@@ -6,16 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 
 
 namespace MISA_WEBHAUI_AMIS_Core.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        IEmployeeService _employeeService;
-        public EmployeeService(EmployeeService employeeService)
+        IEmployeeRepository _employeeRepository;
+        public EmployeeService(IEmployeeRepository employeeRepository)
         {
-            _employeeService = employeeService;
+            _employeeRepository = employeeRepository;
         }
         public int InsertServie(Employee employee)
         {
@@ -26,7 +27,13 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
 
                 throw new MISAvalidateException("Mã nhân viên không được phép để trống");
             }
-            
+            // check trùng mã 
+            var isDuplicate= _employeeRepository.CheckDuplicateCode(employee.EmployeeCode);
+            if (isDuplicate == true)
+            {
+                throw new MISAvalidateException("Mã nhân viên này đã tồn tại vui lòng kiểm tra lại");
+            }
+            var res= _employeeRepository.Insert(employee);
             return 1;
         }
 
