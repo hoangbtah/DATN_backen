@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "Jfho9pkCouS2ZDBaa7nYbk8NBWMqHFsrHsPQnanpthGJ/JWjoj6EDSskDpI02fXe4g4CKYrmqVO83w7AEJ4r6g==",
+  "dgSpecHash": "nzubneRm9HwF8n2qQwGtBcFxSOhG33/2nguCY4Y4SiOlAGEAbViyToneVN+ne1Zb6hCH1kR3fsIbSMOerPb5Mw==",
   "success": true,
   "projectFilePath": "E:\\Web_Amis\\web_AMIS\\MISA_WEBHAUI_Infrastructure\\MISA_WEBHAUI_Infrastructure.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\dapper\\2.1.28\\dapper.2.1.28.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\microsoft.extensions.logging.abstractions.7.0.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\mysqlconnector\\2.3.5\\mysqlconnector.2.3.5.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.diagnostics.diagnosticsource\\7.0.2\\system.diagnostics.diagnosticsource.7.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

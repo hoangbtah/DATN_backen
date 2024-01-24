@@ -1,3 +1,8 @@
+﻿using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
+using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
+using MISA_WEBHAUI_AMIS_Core.Services;
+using MISA_WEBHAUI_Infrastructure.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +11,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// xử lý DI
+builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeService,EmployeeService>();
 
 var app = builder.Build();
 
