@@ -7,10 +7,10 @@ using MISA_WEBHAUI_AMIS_Core.Entities;
 
 namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
 {
-    public interface IEmployeeRepository
+    public interface IEmployeeRepository:IBaseRepository<Employee>
     {
-        IEnumerable<Employee> GetAll();
-        Employee GetbyId(Guid employeeId);
+     
+      
         int Insert(Employee employee);
         int Update(Employee employee);
         int Delete(Guid employeeId);

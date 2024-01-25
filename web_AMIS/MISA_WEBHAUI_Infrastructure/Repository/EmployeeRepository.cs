@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 
 namespace MISA_WEBHAUI_Infrastructure.Repository
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository :BaseRepository<Employee>, IEmployeeRepository
     {
+        // khai báo thông tin database
         public bool CheckDuplicateCode(string employeeCode)
         {
             // khai báo thông tin database
-            var connectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
+           
             // 1.khởi tạo chuỗi kết nối với maria db
-            var sqlConnection = new MySqlConnection(connectString);
+            var sqlConnection = new MySqlConnection(ConnectString);
             // câu lệnh thực hiện lấy ra nhân viên có mã giống với mã truyền vào 
             var sqlCheck = "Select EmployeeCode FROM Employee WHERE EmployeeCode = @employeeCode";
             var parameters = new DynamicParameters();
@@ -38,41 +39,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Employee> GetAll()
-        {
-            
-                // khai báo thông tin database
-                var connectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
-                // 1.khởi tạo chuỗi kết nối với maria db
-                var sqlConnection = new MySqlConnection(connectString);
-                //2 . lấy dữ liệu
-                //2.1 câu lệnh truy vấn dữ liệu
-                var sqlCommand = "SELECT * FROM Employee";
-                // 2.2 thực hiên lấy dữ liệu 
-                var employees = sqlConnection.Query<Employee>(sql: sqlCommand);
-                // kết quả trả về 
-                return employees;
-            
-
-            
-        }
-
-        public Employee GetbyId(Guid employeeId)
-        {
-            var connectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
-            // 1.khởi tạo chuỗi kết nối với maria db
-            var sqlConnection = new MySqlConnection(connectString);
-            //2 . lấy dữ liệu
-            //2.1 câu lệnh truy vấn dữ liệu
-            var sqlCommand = $"SELECT * FROM Employee where EmployeeId= @employeeId";
-            // lưu ý : nếu có tham số truyền cho câu lệnh truy vấn sql thì phải sử dụng dynamicParameter
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@employeeId", employeeId);
-            // 2.2 thực hiên lấy dữ liệu 
-            var employee = sqlConnection.QueryFirstOrDefault<Employee>(sql: sqlCommand, param: parameters);
-            // kết quả trả về 
-            return employee;
-        }
+      
 
         public IEnumerable<Employee> Getpaging(int pageSize, int pageIndex)
         {
@@ -81,10 +48,9 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
 
         public int Insert(Employee employee)
         {
-            // khai báo thông tin database
-            var connectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
+          
             // .khởi tạo chuỗi kết nối với maria db
-            var sqlConnection = new MySqlConnection(connectString);
+            var sqlConnection = new MySqlConnection(ConnectString);
             var sqlCommand = "Proc_InsertEmployee";
             
             // 4 trả thông tin về cho client 

@@ -11,6 +11,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         public Guid EmployeeId { get; set; }
         public string EmployeeCode { get; set; }
         public string EmployeeName { get; set; }
+        public DateTime? DateOfbrith { get; set; }
         public int? Gender { get; set; }
         public string GenderName
         {

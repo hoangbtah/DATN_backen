@@ -12,6 +12,8 @@ namespace web_AMIS.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
+        // khai báo chuỗi kết nối database
+        readonly string connectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
         // lấy danh sách nhân viên 
         //200 lấy thành công danh sách
         // 204 không có dữ liệu
@@ -21,7 +23,7 @@ namespace web_AMIS.Controllers
             try
             {
                 // khai báo thông tin database
-                var connectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
+               
                 // 1.khởi tạo chuỗi kết nối với maria db
                 var sqlConnection = new MySqlConnection(connectString);
                 //2 . lấy dữ liệu
@@ -47,8 +49,7 @@ namespace web_AMIS.Controllers
         {
             try
             {
-                // khai báo thông tin database
-                var connectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
+               
                 // 1.khởi tạo chuỗi kết nối với maria db
                 var sqlConnection = new MySqlConnection(connectString);
                 //2 . lấy dữ liệu
@@ -131,8 +132,7 @@ namespace web_AMIS.Controllers
                 }
                 // 2 khởi tạo kết nối vơi databasse
                 // khai báo thông tin database
-                var connectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
-                // .khởi tạo chuỗi kết nối với maria db
+               
                 var sqlConnection = new MySqlConnection(connectString);
                 //3 thực hiên thêm mới dữ liệu
                 var sqlCommand = "Proc_InsertEmployee";

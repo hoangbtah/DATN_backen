@@ -23,14 +23,28 @@ namespace MISA_WEBHAUI_Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var employees= _employeeRepository.GetAll();
-            return Ok(employees);
+            try
+            {
+                var employees = _employeeRepository.GetAll();
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
         [HttpGet("{employeeId}")]
         public IActionResult GetById(Guid employeeId)
         {
-            var employee= _employeeRepository.GetbyId(employeeId);
-            return Ok(employee);
+            try
+            {
+                var employee = _employeeRepository.GetById(employeeId);
+                return Ok(employee);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
         [HttpPost]
         public IActionResult Post(Employee employee)

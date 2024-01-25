@@ -22,10 +22,27 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         {
            
             // validate dữ liệu
+            // check empty code
             if (string.IsNullOrEmpty(employee.EmployeeCode))
             {
 
                 throw new MISAvalidateException("Mã nhân viên không được phép để trống");
+            }
+            // validate dữ liệu
+            // check empty name
+            if (string.IsNullOrEmpty(employee.EmployeeName))
+            {
+
+                throw new MISAvalidateException("Tên nhân viên không được phép để trống");
+            }
+            // validate dữ liệu
+           
+            // validate dữ liệu
+            // check ngày sinh
+            if (employee.DateOfbrith>DateTime.Now)
+            {
+
+                throw new MISAvalidateException("Ngày sinh không được lớn hơn ngày hiện tại");
             }
             // check trùng mã 
             var isDuplicate= _employeeRepository.CheckDuplicateCode(employee.EmployeeCode);
@@ -34,7 +51,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
                 throw new MISAvalidateException("Mã nhân viên này đã tồn tại vui lòng kiểm tra lại");
             }
             var res= _employeeRepository.Insert(employee);
-            return 1;
+            return res;
         }
 
         public int UpdateServie(Employee employee, Guid employeeId)
