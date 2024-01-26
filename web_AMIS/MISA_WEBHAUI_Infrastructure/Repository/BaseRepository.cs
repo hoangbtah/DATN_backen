@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using MISA_WEBHAUI_AMIS_Core.Entities;
+using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 using MySqlConnector;
 
 namespace MISA_WEBHAUI_Infrastructure.Repository
 {
-    public class BaseRepository<MISAEntity>
+    public class BaseRepository<MISAEntity>:IBaseRepository<MISAEntity>
     {
         protected readonly string ConnectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
         protected MySqlConnection SqlConnection;
@@ -44,6 +45,16 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return entity;
 
             }
+        }
+
+        public int Insert(MISAEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(MISAEntity entity, Guid enityId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

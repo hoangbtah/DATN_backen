@@ -11,5 +11,10 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         IEnumerable<MISAEntity> GetAll();
 
         MISAEntity GetById(Guid entityId);
+
+        int Insert(MISAEntity entity);
+
+        int Update(MISAEntity entity,Guid enityId);
+
     }
 }

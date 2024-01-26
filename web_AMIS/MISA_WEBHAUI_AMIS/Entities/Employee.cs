@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA_WEBHAUI_AMIS_Core.MISAAttribute;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,11 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
     public class Employee
     {
         public Guid EmployeeId { get; set; }
+        [NotEmpty]
+        [PropertyName("Mã nhân viên")]
         public string EmployeeCode { get; set; }
+        [NotEmpty]
+        [PropertyName("Tên nhân viên")]
         public string EmployeeName { get; set; }
         public DateTime? DateOfbrith { get; set; }
         public int? Gender { get; set; }

@@ -68,7 +68,16 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
 
         public int Update(Employee employee)
         {
-            throw new NotImplementedException();
+            // .khởi tạo chuỗi kết nối với maria db
+            var sqlConnection = new MySqlConnection(ConnectString);
+            var sqlCommand = "Proc_UpdateEmployee";
+
+            // 4 trả thông tin về cho client 
+            // thực hiện thêm mới mã nhân viên
+            //employee.EmployeeId = Guid.NewGuid();
+
+            var result = sqlConnection.Execute(sql: sqlCommand, param: employee, commandType: System.Data.CommandType.StoredProcedure);
+            return result;
         }
     }
 }
