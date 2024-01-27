@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -144,9 +145,54 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         /// <exception cref="NotImplementedException"></exception>
         public int Update(MISAEntity entity, Guid enityId)
         {
-            throw new NotImplementedException();
+            return 1;
+            //using (SqlConnection = new MySqlConnection(ConnectString))
+            ////using (SqlConnection connection = new SqlConnection(ConnectionString))
+            //{
+            //    SqlConnection.Open();
+
+            //    using (var cmd = CreateUpdateCommand(SqlConnection, entity))
+            //    {
+            //        int result = cmd.ExecuteNonQuery();
+            //        return result;
+            //    }
+            //}
+
+
+           
         }
-    
+    //    protected virtual SqlCommand CreateUpdateCommand(SqlConnection connection, T entity)
+    //    {
+    //        // Override this method in derived classes to create and configure the SqlCommand for the Update operation.
+    //        // Example:
+    //        // SqlCommand cmd = new SqlCommand("UpdateEntity", connection);
+    //        // cmd.CommandType = CommandType.StoredProcedure;
+    //        // cmd.Parameters.AddWithValue("@Param1", entity.Property1);
+    //        // return cmd;
+
+    //        throw new NotImplementedException("CreateUpdateCommand must be implemented in derived classes.");
+    //    }
+        
+     
+    //{
+    //    protected string ConnectionString { get; }
+
+    //    public BaseRepository(string connectionString)
+    //    {
+    //        ConnectionString = connectionString;
+    //    }
+
+    //    public int Update(T entity)
+    //    {
+    //        using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
+    //        {
+    //            dbConnection.Open();
+    //            return dbConnection.Execute("UpdateEntity", entity, commandType: CommandType.StoredProcedure);
+    //        }
+    //    }
+    //}
+
+
     #endregion
 }
 }

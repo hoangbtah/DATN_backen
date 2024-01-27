@@ -129,6 +129,9 @@
   <data name="ErrorDateOfBrith" xml:space="preserve">
     <value>Ngày sinh không được lớn hơn ngày hiện tại</value>
   </data>
+  <data name="ErrorEmail" xml:space="preserve">
+    <value>Email không đúng định dạng , vui lòng kiểm tra lại.</value>
+  </data>
   <data name="ErrorException" xml:space="preserve">
     <value>Có lỗi xảy ra vui lòng liên hệ MISA để được hỗ trợ.</value>
   </data>

@@ -11,13 +11,25 @@ using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 
 namespace MISA_WEBHAUI_AMIS_Core.Services
 {
-    public class EmployeeService :BaseService<Employee>, IEmployeeService
+    public class EmployeeService : BaseService<Employee>, IEmployeeService
     {
+        #region Fields
         IEmployeeRepository _employeeRepository;
-        public EmployeeService(IEmployeeRepository employeeRepository):base(employeeRepository)
+        #endregion
+
+        #region Contructor
+        public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
+        #endregion
+        #region Method
+        /// <summary>
+        /// Kiểm tra dữ liệu nhân viên
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <exception cref="MISAvalidateException"></exception>
+        /// created by BVHoang(27/01/2024)
         protected override void ValidateEmployee(Employee employee)
         {
             //// validate dữ liệu
@@ -33,47 +45,42 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
             {
                 throw new MISAvalidateException(Resources.ResourceVN.EmployeeCodeDuplicate);
             }
+            // check email
+            // kiểm tra xem có nhập email không nếu có check định dạng, nếu không thì thôi
+            if (!String.IsNullOrEmpty(employee.Email))
+            {
+                if (CheckEmail(employee.Email) == false)
+                {
+                    throw new MISAvalidateException(Resources.ResourceVN.ErrorEmail);
+                }
+            }
 
         }
-        //public int InsertServie(Employee employee)
-        //{
-
-        //    // validate dữ liệu
-        //    // check empty code
-        //    if (string.IsNullOrEmpty(employee.EmployeeCode))
-        //    {
-
-        //        throw new MISAvalidateException("Mã nhân viên không được phép để trống");
-        //    }
-        //    // validate dữ liệu
-        //    // check empty name
-        //    if (string.IsNullOrEmpty(employee.EmployeeName))
-        //    {
-
-        //        throw new MISAvalidateException("Tên nhân viên không được phép để trống");
-        //    }
-        //    // validate dữ liệu
-
-        //    // validate dữ liệu
-        //    // check ngày sinh
-        //    if (employee.DateOfbrith>DateTime.Now)
-        //    {
-
-        //        throw new MISAvalidateException("Ngày sinh không được lớn hơn ngày hiện tại");
-        //    }
-        //    // check trùng mã 
-        //    var isDuplicate= _employeeRepository.CheckDuplicateCode(employee.EmployeeCode);
-        //    if (isDuplicate == true)
-        //    {
-        //        throw new MISAvalidateException("Mã nhân viên này đã tồn tại vui lòng kiểm tra lại");
-        //    }
-        //    var res= _employeeRepository.Insert(employee);
-        //    return res;
-        //}
-
-        //public int UpdateServie(Employee employee, Guid employeeId)
-        //{
-        //    return 1;
-        //}
+        /// <summary>
+        /// kiểm tra email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
+        public bool CheckEmail(string email)
+        {
+            // cắt đi nhưng khoảng trắng của email
+            var trimEmail = email.Trim();
+            // kiểm tra email có đúng định dạng 
+            if (trimEmail.EndsWith("."))
+            {
+                return false;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimEmail;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        #endregion
     }
 }

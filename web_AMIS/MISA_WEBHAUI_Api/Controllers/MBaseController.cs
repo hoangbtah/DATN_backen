@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MISA_WEBHAUI_AMIS_Core.Entities;
 using MISA_WEBHAUI_AMIS_Core.Exceptions;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
 using MISA_WEBHAUI_AMIS_Core.Resources;
+using System.Linq.Expressions;
 using static Dapper.SqlMapper;
 
 namespace MISA_WEBHAUI_Api.Controllers
@@ -46,23 +48,12 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
             catch (MISAvalidateException ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                userMsg = ex.Message,
-                data = ex.Data,
-                };
-            return BadRequest(response);
-             }
+                return HandleMISAException(ex);
+            }
             catch (Exception ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
-                    data = ex.Data,
-                };
-                return StatusCode(500,response);
+
+                return HandleException(ex);
             }
         }
         /// <summary>
@@ -82,23 +73,12 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
             catch (MISAvalidateException ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = ex.Message,
-                    data = ex.Data,
-                };
-                return BadRequest(response);
+                return HandleMISAException(ex);
             }
             catch (Exception ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
-                    data = ex.Data,
-                };
-                return StatusCode(500, response);
+
+                return HandleException(ex);
             }
         }
         /// <summary>
@@ -118,24 +98,14 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
             catch (MISAvalidateException ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = ex.Message,
-                    data = ex.Data,
-                };
-                return BadRequest(response);
+                return HandleMISAException(ex);
             }
             catch (Exception ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
-                    data = ex.Data,
-                };
-                return StatusCode(500, response);
+             
+                return HandleException(ex);
             }
+          
         }
         /// <summary>
         /// Sửa dữ liệu theo id
@@ -149,29 +119,18 @@ namespace MISA_WEBHAUI_Api.Controllers
         {
             try
             {
-                var data = _baseRepository.Update(entity,entityId);
+                var data = _baseService.UpdateServie(entity,entityId);
                 return Ok(data);
 
             }
-            catch (MISAvalidateException ex)
+           catch (MISAvalidateException ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = ex.Message,
-                    data = ex.Data,
-                };
-                return BadRequest(response);
+                return HandleMISAException(ex);
             }
             catch (Exception ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
-                    data = ex.Data,
-                };
-                return StatusCode(500, response);
+             
+                return HandleException(ex);
             }
         }
         /// <summary>
@@ -191,26 +150,42 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
             catch (MISAvalidateException ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = ex.Message,
-                    data = ex.Data,
-                };
-                return BadRequest(response);
+                return HandleMISAException(ex);
             }
             catch (Exception ex)
             {
-                var response = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
-                    data = ex.Data,
-                };
-                return StatusCode(500, response);
+
+                return HandleException(ex);
             }
         }
+        /// <summary>
+        /// xử lý ngoại lệ xảy ra gửi thông báo lỗi
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        private IActionResult HandleException(Exception ex)
+        {
+            var error = new ErrorService();
+            error.DevMsg = ex.Message;
+            error.UserMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException;
+            return StatusCode(500, error);
+           
+        }
+        /// <summary>
+        /// xử lý ngoại lệ xảy ra gửi thông báo lỗi
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        private IActionResult HandleMISAException(MISAvalidateException ex)
+        {
+            var error = new ErrorService(); 
+            error.DevMsg = ex.Message;
+            error.UserMsg = ex.Message;
+            error.Data = ex.Data;
+            return BadRequest(error);
+        }
+
         #endregion
-      
+
     }
 }

@@ -97,6 +97,15 @@ namespace MISA_WEBHAUI_AMIS_Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email không đúng định dạng , vui lòng kiểm tra lại..
+        /// </summary>
+        public static string ErrorEmail {
+            get {
+                return ResourceManager.GetString("ErrorEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Có lỗi xảy ra vui lòng liên hệ MISA để được hỗ trợ..
         /// </summary>
         public static string ErrorException {

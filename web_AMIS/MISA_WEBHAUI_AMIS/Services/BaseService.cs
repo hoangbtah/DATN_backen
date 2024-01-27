@@ -13,11 +13,24 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
 {
     public class BaseService<MISAEntity>:IBaseService<MISAEntity>
     {
+        #region Fields
         IBaseRepository<MISAEntity> _baseRepository;
+        #endregion
+
+        #region Contructor
         public BaseService(IBaseRepository<MISAEntity> baseRepository)
         {
             _baseRepository = baseRepository;
         }
+        #endregion
+
+        #region Method
+        /// <summary>
+        /// thêm mới dữ liệu
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         public int InsertServie(MISAEntity entity)
         {
 
@@ -30,8 +43,14 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
             return res;
         }
 
-      
-      
+
+        /// <summary>
+        /// Cập nhật dữ liệu
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         public int UpdateServie(MISAEntity entity, Guid entityId)
         {
             // validate dữ liệu
@@ -44,9 +63,10 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
             return res;
         }
         /// <summary>
-        /// kiểm tra ngày 
+        /// kiểm tra dữ liệu không được để trống.
         /// </summary>
         /// <param name="entity"></param>
+        /// created by BVHoang(27/01/2024)
         /// created by BVHoang(27/01/2024)
         private void ValidateData(MISAEntity entity)
         {
@@ -78,9 +98,15 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
             
 
         }
+        /// <summary>
+        /// kiểm tra dữ liệu của nhân viên
+        /// </summary>
+        /// <param name="entity"></param>
+        /// created by BVHoang(27/01/2024)
         protected virtual void ValidateEmployee(MISAEntity entity)
         {
 
         }
+        #endregion
     }
 }
