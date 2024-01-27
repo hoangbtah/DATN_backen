@@ -18,7 +18,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         #endregion
 
         #region Contructor
-        public EmployeesController(IEmployeeRepository employeeRepository, IEmployeeService employeeService) : base(employeeRepository, employeeService)
+        public EmployeesController(IEmployeeRepository employeeRepository, IEmployeeService employeeService) : base(employeeRepository,employeeService)
         {
             _employeeRepository = employeeRepository;
             _employeeService = employeeService;

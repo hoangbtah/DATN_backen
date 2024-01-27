@@ -18,6 +18,7 @@ builder.Services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
 builder.Services.AddScoped(typeof(IBaseRepository<>),typeof(BaseRepository<>));
 
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

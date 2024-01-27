@@ -24,10 +24,22 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+       ///created by BVHoang(27/01/2024)
         public int Delete(Guid entityId)
         {
-            throw new NotImplementedException();
+            var className = typeof(MISAEntity).Name;
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                var sqlCommand = $"DELETE FROM {className} where {className}Id= @{className}Id";
+                // lưu ý : nếu có tham số truyền cho câu lệnh truy vấn sql thì phải sử dụng dynamicParameter
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add($"@{className}Id",entityId);
+                // 2.2 thực hiên lấy dữ liệu 
+                var entity = SqlConnection.Execute(sql: sqlCommand, param: parameters);
+                // kết quả trả về 
+                return entity;
+
+            }
         }
 
         /// <summary>
@@ -91,6 +103,8 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
 
                 //kiểm tra property có phải là khóa chính của bảng không
                 var primaryKey= Attribute.IsDefined(prop,typeof(PrimayKey));
+                // kiểm tra property có phải cái không cần khi thêm mới không
+                var notMap = Attribute.IsDefined(prop, typeof(NotMapInsert));
                 // thực hiện tạo ra giá trị mới cho khóa chính
                 if(primaryKey==true || propName==$"{className}Id")
                 {
@@ -100,6 +114,9 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                         propValue = Guid.NewGuid();
                     }    
                 }
+                // nếu nó là cái không cho thêm mới vào thì bỏ qua
+                if (notMap == true)
+                    continue;
 
                 var paramName = $"@{propName}";
                 sqlColumsNames.Append($"{delimiter}{propName}");

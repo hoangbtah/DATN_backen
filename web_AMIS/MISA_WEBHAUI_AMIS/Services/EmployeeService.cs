@@ -22,16 +22,16 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         {
             //// validate dữ liệu
             //// check ngày sinh
-            //if (employee.DateOfbrith > DateTime.Now)
-            //{
+            if (employee.DateOfbrith > DateTime.Now)
+            {
 
-            //    throw new MISAvalidateException("Ngày sinh không được lớn hơn ngày hiện tại");
-            //}
+                throw new MISAvalidateException(Resources.ResourceVN.ErrorDateOfBrith);
+            }
             // check trùng mã 
             var isDuplicate = _employeeRepository.CheckDuplicateCode(employee.EmployeeCode);
             if (isDuplicate == true)
             {
-                throw new MISAvalidateException("Mã nhân viên này đã tồn tại vui lòng kiểm tra lại");
+                throw new MISAvalidateException(Resources.ResourceVN.EmployeeCodeDuplicate);
             }
 
         }

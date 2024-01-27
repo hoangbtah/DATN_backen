@@ -22,7 +22,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         {
 
             // validate dữ liệu
-            ValidateDate(entity);
+            ValidateData(entity);
             ValidateEmployee(entity);
            
            //thực hiện thêm mới vào database
@@ -35,7 +35,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         public int UpdateServie(MISAEntity entity, Guid entityId)
         {
             // validate dữ liệu
-            ValidateDate(entity);
+            ValidateData(entity);
             ValidateEmployee(entity);
 
             //thực hiện thêm mới vào database
@@ -43,7 +43,12 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
             var res = _baseRepository.Update(entity,entityId);
             return res;
         }
-        private void ValidateDate(MISAEntity entity)
+        /// <summary>
+        /// kiểm tra ngày 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// created by BVHoang(27/01/2024)
+        private void ValidateData(MISAEntity entity)
         {
            
             var props = entity.GetType().GetProperties();
@@ -66,7 +71,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
                 if(propValue== null || string.IsNullOrEmpty(propValue.ToString()))
                 {
                     nameDisplay= (nameDisplay==string.Empty? propName:nameDisplay);
-                    throw new MISAvalidateException($"Thông tin {nameDisplay} không được phép để trống");
+                    throw new MISAvalidateException(string.Format(MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.InforNotEmpty,nameDisplay));
                 }    
 
             }

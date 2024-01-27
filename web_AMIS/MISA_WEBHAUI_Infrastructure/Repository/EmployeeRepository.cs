@@ -34,33 +34,10 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             }
         }
 
-        public int Delete(Guid employeeId)
-        {
-            throw new NotImplementedException();
-        }
-
-      
-
         public IEnumerable<Employee> Getpaging(int pageSize, int pageIndex)
         {
             throw new NotImplementedException();
         }
-
-        public int Insert(Employee employee)
-        {
-          
-            // .khởi tạo chuỗi kết nối với maria db
-            var sqlConnection = new MySqlConnection(ConnectString);
-            var sqlCommand = "Proc_InsertEmployee";
-            
-            // 4 trả thông tin về cho client 
-            // thực hiện thêm mới mã nhân viên
-            employee.EmployeeId = Guid.NewGuid();
-
-            var result = sqlConnection.Execute(sql: sqlCommand, param: employee, commandType: System.Data.CommandType.StoredProcedure);
-            return result;
-        }
-
         public Employee Search(Guid employeeId)
         {
             throw new NotImplementedException();

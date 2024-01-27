@@ -37,6 +37,14 @@ namespace MISA_WEBHAUI_AMIS_Core.MISAAttribute
     {
 
     }
+    /// <summary>
+    /// đánh dấu cột để bỏ qua khi thêm mới
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class NotMapInsert : Attribute
+    {
+
+    }
     #endregion
 
 

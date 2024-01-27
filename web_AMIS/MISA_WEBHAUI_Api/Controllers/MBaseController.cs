@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MISA_WEBHAUI_AMIS_Core.Exceptions;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
+using MISA_WEBHAUI_AMIS_Core.Resources;
 using static Dapper.SqlMapper;
 
 namespace MISA_WEBHAUI_Api.Controllers
@@ -14,22 +15,18 @@ namespace MISA_WEBHAUI_Api.Controllers
         #region Fields
         IBaseService<MISAEntity> _baseService;
         IBaseRepository<MISAEntity> _baseRepository;
-        private IEmployeeRepository employeeRepository;
-        private IEmployeeService employeeService;
+       
         #endregion
 
         #region Contructor
-        public MBaseController(IBaseService<MISAEntity> baseService, IBaseRepository<MISAEntity> baseRepository)
+        public MBaseController(IBaseRepository<MISAEntity> baseRepository,IBaseService<MISAEntity> baseService)
         {
             _baseService = baseService;
             _baseRepository = baseRepository;
         }
 
-        public MBaseController(IEmployeeRepository employeeRepository, IEmployeeService employeeService)
-        {
-            this.employeeRepository = employeeRepository;
-            this.employeeService = employeeService;
-        }
+       
+
         #endregion
 
         #region Methods
@@ -37,6 +34,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// Lấy toàn bộ dữ liệu
         /// </summary>
         /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -61,7 +59,7 @@ namespace MISA_WEBHAUI_Api.Controllers
                 var response = new
                 {
                     devMsg = ex.Message,
-                    userMsg = "Có lỗi xảy ra vui lòng liên hệ MISA để được giúp đỡ",
+                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
                     data = ex.Data,
                 };
                 return StatusCode(500,response);
@@ -72,6 +70,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         [HttpGet("{entityId}")]
         public IActionResult GetById(Guid entityId) 
         {
@@ -96,7 +95,7 @@ namespace MISA_WEBHAUI_Api.Controllers
                 var response = new
                 {
                     devMsg = ex.Message,
-                    userMsg = "Có lỗi xảy ra vui lòng liên hệ MISA để được giúp đỡ",
+                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
                     data = ex.Data,
                 };
                 return StatusCode(500, response);
@@ -107,12 +106,13 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         [HttpPost]
         public IActionResult Post(MISAEntity entity)
         {
             try
             {
-                var data = _baseRepository.Insert(entity);
+                var data = _baseService.InsertServie(entity);
                 return StatusCode(201,data);
 
             }
@@ -131,7 +131,7 @@ namespace MISA_WEBHAUI_Api.Controllers
                 var response = new
                 {
                     devMsg = ex.Message,
-                    userMsg = "Có lỗi xảy ra vui lòng liên hệ MISA để được giúp đỡ",
+                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
                     data = ex.Data,
                 };
                 return StatusCode(500, response);
@@ -143,6 +143,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// <param name="entity"></param>
         /// <param name="entityId"></param>
         /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         [HttpPut("entityId")]
         public IActionResult Put(MISAEntity entity, Guid entityId)
         {
@@ -167,7 +168,7 @@ namespace MISA_WEBHAUI_Api.Controllers
                 var response = new
                 {
                     devMsg = ex.Message,
-                    userMsg = "Có lỗi xảy ra vui lòng liên hệ MISA để được giúp đỡ",
+                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
                     data = ex.Data,
                 };
                 return StatusCode(500, response);
@@ -178,6 +179,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         [HttpDelete("{entityId}")]
         public IActionResult Delete(Guid entityId)
         {
@@ -202,7 +204,7 @@ namespace MISA_WEBHAUI_Api.Controllers
                 var response = new
                 {
                     devMsg = ex.Message,
-                    userMsg = "Có lỗi xảy ra vui lòng liên hệ MISA để được giúp đỡ",
+                    userMsg = MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.ErrorException,
                     data = ex.Data,
                 };
                 return StatusCode(500, response);
