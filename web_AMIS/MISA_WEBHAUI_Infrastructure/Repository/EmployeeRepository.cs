@@ -66,7 +66,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        public int Update(Employee employee)
+        public int Update(Employee employee,Guid employeeId)
         {
             // .khởi tạo chuỗi kết nối với maria db
             var sqlConnection = new MySqlConnection(ConnectString);

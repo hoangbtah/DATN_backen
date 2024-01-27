@@ -6,14 +6,29 @@ using System.Threading.Tasks;
 using Dapper;
 using MISA_WEBHAUI_AMIS_Core.Entities;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
+using MISA_WEBHAUI_AMIS_Core.MISAAttribute;
 using MySqlConnector;
 
 namespace MISA_WEBHAUI_Infrastructure.Repository
 {
-    public class BaseRepository<MISAEntity>:IBaseRepository<MISAEntity>
+    public class BaseRepository<MISAEntity> : IBaseRepository<MISAEntity>
     {
+        #region Connect
         protected readonly string ConnectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
         protected MySqlConnection SqlConnection;
+        #endregion
+
+        #region Method
+        /// <summary>
+        /// Xóa dữ liệu theo id
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public int Delete(Guid entityId)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Lấy toàn bộ dữ liệu
@@ -21,15 +36,20 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         /// <typeparam name="MISAEntity">kiểu của object</typeparam>
         /// <returns>danh sách object </returns>
         /// created by bvhooang(25/01/2024)
-        public  IEnumerable<MISAEntity> GetAll()
+        public IEnumerable<MISAEntity> GetAll()
         {
-            var className= typeof(MISAEntity).Name;
+            var className = typeof(MISAEntity).Name;
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
                 var employees = SqlConnection.Query<MISAEntity>($"SELECT * FROM {className}");
                 return employees;
             }
         }
+        /// <summary>
+        /// Lấy dữ liệu theo id
+        /// </summary>
+        /// <param name="entityID"></param>
+        /// <returns></returns>
         public MISAEntity GetById(Guid entityID)
         {
             var className = typeof(MISAEntity).Name;
@@ -46,15 +66,70 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
 
             }
         }
-
+        /// <summary>
+        /// Thêm mới dữ liệu
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public int Insert(MISAEntity entity)
         {
-            throw new NotImplementedException();
-        }
+            // build câu chuỗi sql thực hiện thêm mới dữ liệu
+            var className= typeof(MISAEntity).Name;
+            var sqlColumsNames= new StringBuilder();
+            var sqlColumsValue = new StringBuilder();
+            DynamicParameters parameters= new DynamicParameters();
+            // 1. duyệt tất cả các property của đối tượng
+            var props= typeof(MISAEntity).GetProperties();
+            // ban đâu cho dấu phẩy rỗng sau lần đâu tiên append vào thì gán lại bằng dấu phẩy
+            string delimiter = "";
+            foreach (var prop in props)
+            {
+                // 2. lấy tên của property 
+                var propName = prop.Name;
+                var propValue = prop.GetValue(entity);
 
+                //kiểm tra property có phải là khóa chính của bảng không
+                var primaryKey= Attribute.IsDefined(prop,typeof(PrimayKey));
+                // thực hiện tạo ra giá trị mới cho khóa chính
+                if(primaryKey==true || propName==$"{className}Id")
+                {
+                    // kiểm tra nếu khóa chỉnh là kiểu GUid thì tạo ra giá trị
+                    if(prop.PropertyType == typeof(Guid))
+                    {
+                        propValue = Guid.NewGuid();
+                    }    
+                }
+
+                var paramName = $"@{propName}";
+                sqlColumsNames.Append($"{delimiter}{propName}");
+                sqlColumsValue.Append($"{delimiter}{paramName}");
+                delimiter = ",";
+                parameters.Add(paramName, propValue);
+
+            }
+            //3 Lây ra giá trị của property 
+            // 4. Thực hiện build câu lệnh sql
+            var sqlCommand = $"INSERT INTO {className}({sqlColumsNames.ToString()}) VALUES ({sqlColumsValue.ToString()})";
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                var result = SqlConnection.Execute(sql:sqlCommand,param:parameters);
+                return result;
+            }    
+           
+        }
+        /// <summary>
+        /// Chỉnh sửa dữ liệu
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="enityId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public int Update(MISAEntity entity, Guid enityId)
         {
             throw new NotImplementedException();
         }
-    }
+    
+    #endregion
+}
 }

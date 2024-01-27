@@ -16,5 +16,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
 
         int Update(MISAEntity entity,Guid enityId);
 
+        int Delete(Guid entityId);
+
     }
 }

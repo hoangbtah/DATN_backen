@@ -9,6 +9,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
 {
     public class Employee
     {
+        [PrimayKey]
         public Guid EmployeeId { get; set; }
         [NotEmpty]
         [PropertyName("Mã nhân viên")]
