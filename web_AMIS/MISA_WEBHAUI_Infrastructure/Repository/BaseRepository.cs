@@ -143,56 +143,60 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         /// <param name="enityId"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public int Update(MISAEntity entity, Guid enityId)
+        public int Update(MISAEntity entity, Guid entityId)
         {
-            return 1;
-            //using (SqlConnection = new MySqlConnection(ConnectString))
-            ////using (SqlConnection connection = new SqlConnection(ConnectionString))
-            //{
-            //    SqlConnection.Open();
-
-            //    using (var cmd = CreateUpdateCommand(SqlConnection, entity))
-            //    {
-            //        int result = cmd.ExecuteNonQuery();
-            //        return result;
-            //    }
-            //}
-
-
+            // build câu chuỗi sql thực hiện cập nhật dữ liệu
+            var className = typeof(MISAEntity).Name;
+            var sqlColumns = new StringBuilder();
            
+            DynamicParameters parameters = new DynamicParameters();
+            // 1. duyệt tất cả các property của đối tượng
+            var props = typeof(MISAEntity).GetProperties();
+            // ban đâu cho dấu phẩy rỗng sau lần đâu tiên append vào thì gán lại bằng dấu phẩy
+            string delimiter = "";
+            foreach (var prop in props)
+            {
+                // 2. lấy tên của property 
+                var propName = prop.Name;
+                var propValue = prop.GetValue(entity);
+
+                //kiểm tra property có phải là khóa chính của bảng không
+                var primaryKey = Attribute.IsDefined(prop, typeof(PrimayKey));
+                // kiểm tra property có phải cái không cần khi thêm mới không
+                var notMap = Attribute.IsDefined(prop, typeof(NotMapInsert));
+                // thực hiện tạo ra giá trị mới cho khóa chính
+                if (primaryKey == true || propName == $"{className}Id")
+                {
+                    // kiểm tra nếu khóa chỉnh là kiểu GUid thì tạo ra giá trị
+                    if (prop.PropertyType == typeof(Guid))
+                    {
+                        propValue = Guid.NewGuid();
+                    }
+                }
+                // nếu nó là cái không cho thêm mới vào thì bỏ qua
+                if (notMap == true)
+                    continue;
+
+             
+                var paramName = $"@{propName}";
+                sqlColumns.Append($"{delimiter}{propName} = {paramName}");
+                delimiter = ",";
+                parameters.Add(paramName, propValue);
+
+            }
+            //3 Lây ra giá trị của property 
+            // 4. Thực hiện build câu lệnh sql
+            //var sqlCommand = $"INSERT INTO {className}({sqlColumsNames.ToString()}) VALUES ({sqlColumsValue.ToString()})";
+            var sqlCommand = $"UPDATE {className} SET {sqlColumns.ToString()} WHERE {className}Id = @{className}Id";
+             parameters.Add($"@{className}Id", entityId);
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                var result = SqlConnection.Execute(sql: sqlCommand, param: parameters);
+                return result;
+            }
+
         }
-    //    protected virtual SqlCommand CreateUpdateCommand(SqlConnection connection, T entity)
-    //    {
-    //        // Override this method in derived classes to create and configure the SqlCommand for the Update operation.
-    //        // Example:
-    //        // SqlCommand cmd = new SqlCommand("UpdateEntity", connection);
-    //        // cmd.CommandType = CommandType.StoredProcedure;
-    //        // cmd.Parameters.AddWithValue("@Param1", entity.Property1);
-    //        // return cmd;
 
-    //        throw new NotImplementedException("CreateUpdateCommand must be implemented in derived classes.");
-    //    }
-        
-     
-    //{
-    //    protected string ConnectionString { get; }
-
-    //    public BaseRepository(string connectionString)
-    //    {
-    //        ConnectionString = connectionString;
-    //    }
-
-    //    public int Update(T entity)
-    //    {
-    //        using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
-    //        {
-    //            dbConnection.Open();
-    //            return dbConnection.Execute("UpdateEntity", entity, commandType: CommandType.StoredProcedure);
-    //        }
-    //    }
-    //}
-
-
-    #endregion
-}
+        #endregion
+    }
 }

@@ -114,7 +114,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// <param name="entityId"></param>
         /// <returns></returns>
         /// created by BVHoang(27/01/2024)
-        [HttpPut("entityId")]
+        [HttpPut("{entityId}")]
         public IActionResult Put(MISAEntity entity, Guid entityId)
         {
             try
