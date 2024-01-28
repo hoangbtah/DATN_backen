@@ -43,16 +43,18 @@ namespace MISA_WEBHAUI_Api.Controllers
             try
             {
                 var data= _baseRepository.GetAll();
+                PrePareHeader();
                 return Ok(data);
 
             }
             catch (MISAvalidateException ex)
             {
+                PrePareHeader();
                 return HandleMISAException(ex);
             }
             catch (Exception ex)
             {
-
+                PrePareHeader();
                 return HandleException(ex);
             }
         }
@@ -93,6 +95,7 @@ namespace MISA_WEBHAUI_Api.Controllers
             try
             {
                 var data = _baseService.InsertServie(entity);
+                PrePareHeader();
                 return StatusCode(201,data);
 
             }
@@ -184,7 +187,14 @@ namespace MISA_WEBHAUI_Api.Controllers
             error.Data = ex.Data;
             return BadRequest(error);
         }
-
+        private void PrePareHeader()
+        {
+            //Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            //Response.Headers.Add("content-type", "application/json");
+            //Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+            //Response.Headers.Add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+            //Response.Headers.Add("Access-Control-Allow-Headers", "Origin,Content-Type,Accept");
+        }
         #endregion
 
     }
