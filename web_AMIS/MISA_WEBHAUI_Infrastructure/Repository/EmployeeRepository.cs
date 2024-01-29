@@ -62,19 +62,19 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
-
-        //public int Update(Employee employee,Guid employeeId)
-        //{
-        //    // .khởi tạo chuỗi kết nối với maria db
-        //    var sqlConnection = new MySqlConnection(ConnectString);
-        //    var sqlCommand = "Proc_UpdateEmployee";
-
-        //    // 4 trả thông tin về cho client 
-        //    // thực hiện thêm mới mã nhân viên
-        //    //employee.EmployeeId = Guid.NewGuid();
-
-        //    var result = sqlConnection.Execute(sql: sqlCommand, param: employee, commandType: System.Data.CommandType.StoredProcedure);
-        //    return result;
-        //}
+        public object GetEmployeeInnerDepartment()
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                //var sqlCommand = " SELECT EmployeeId, EmployeeCode, EmployeeName, Gender,GenderName" +
+                //    " IdentityCode, IdentityDate, `Position`, IdentityPlace, Address, PhoneNumber," +
+                //    " LandlinePhone, Email, BankAccount, BankName,Branch, e.CreateDate, e.CreateBy," +
+                //    " e.ModifileDate, e.ModifileBy, e.DepartmentId,d.DepartmentName ,d.DepartmentCode " +
+                //    " FROM employee e INNER JOIN department d ON e.DepartmentId = d.DepartmentId";
+                var sqlCommand = "SELECT * FROM employee e INNER JOIN department d ON e.DepartmentId = d.DepartmentId";
+                var employees = SqlConnection.Query<object>(sqlCommand);
+                return employees;
+            }
+        }
     }
 }

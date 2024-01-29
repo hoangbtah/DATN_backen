@@ -24,6 +24,34 @@ namespace MISA_WEBHAUI_Api.Controllers
             _employeeService = employeeService;
         }
         #endregion
+        #region Method
+        /// <summary>
+        /// lấy dữ liệu của bảng employee kết hợp với department
+        /// </summary>
+        /// <returns></returns>
+        /// created by BVHoang(29/01/2024)
+        [HttpGet("employees")]
+        public IActionResult GetEmployeeInnerDepartment()
+        {
+            try
+            {
+                var data = _employeeRepository.GetEmployeeInnerDepartment();
+
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+        }
+        #endregion
 
 
     }

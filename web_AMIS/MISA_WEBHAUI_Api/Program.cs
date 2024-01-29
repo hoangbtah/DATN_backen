@@ -17,6 +17,7 @@ builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
 builder.Services.AddScoped<IEmployeeService,EmployeeService>();
 builder.Services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
 builder.Services.AddScoped(typeof(IBaseRepository<>),typeof(BaseRepository<>));
+// Xử lý cros policy
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(

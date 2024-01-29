@@ -116,6 +116,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         /// <summary>
         /// chi nhánh
         /// </summary>
+        /// created by BVHoang(27/01/2024)
         public string? Branch { get; set; }
         /// <summary>
         /// ngày tạo
