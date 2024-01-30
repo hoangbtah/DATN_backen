@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
+using System.Reflection.Metadata.Ecma335;
 
 
 namespace MISA_WEBHAUI_AMIS_Core.Services
@@ -32,19 +33,37 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         /// created by BVHoang(27/01/2024)
         protected override void ValidateEmployee(Employee employee)
         {
-            //// validate dữ liệu
-            //// check ngày sinh
-            if (employee.DateOfbrith > DateTime.Now)
-            {
-
-                throw new MISAvalidateException(Resources.ResourceVN.ErrorDateOfBrith);
-            }
-            // check trùng mã 
+           
+           CheckEmployee(employee);
             var isDuplicate = _employeeRepository.CheckDuplicateCode(employee.EmployeeCode);
             if (isDuplicate == true)
             {
                 throw new MISAvalidateException(Resources.ResourceVN.EmployeeCodeDuplicate);
             }
+
+        }
+        protected override void ValidateEmployeeForUpdate(Employee employee,Guid entitiId)
+        {
+            var isDuplicateForUpdate = _employeeRepository.CheckDuplicateForUpdate(entitiId, employee.EmployeeCode);
+            CheckEmployee(employee);
+            var isDuplicate = _employeeRepository.CheckDuplicateCode(employee.EmployeeCode);
+
+            if (isDuplicateForUpdate == false)
+            {
+                if (isDuplicate == true)
+                {
+                    throw new MISAvalidateException(Resources.ResourceVN.EmployeeCodeDuplicate);
+                }
+            }
+
+        }
+        /// <summary>
+        /// check các thông tin nhân viên
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <exception cref="MISAvalidateException"></exception>
+        public void CheckEmployee(Employee employee)
+        {
             // check email
             // kiểm tra xem có nhập email không nếu có check định dạng, nếu không thì thôi
             if (!String.IsNullOrEmpty(employee.Email))
@@ -54,8 +73,16 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
                     throw new MISAvalidateException(Resources.ResourceVN.ErrorEmail);
                 }
             }
+            //// validate dữ liệu
+            //// check ngày sinh
+            if (employee.DateOfbrith > DateTime.Now)
+            {
+
+                throw new MISAvalidateException(Resources.ResourceVN.ErrorDateOfBrith);
+            }
 
         }
+    //    public bool CheckDuplicateForUpdate(string employee)
         /// <summary>
         /// kiểm tra email
         /// </summary>

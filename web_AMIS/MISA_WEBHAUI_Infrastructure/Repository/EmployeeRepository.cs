@@ -40,6 +40,31 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             }
         }
         /// <summary>
+        /// kiểm tra mã nhân viên sau khi update có giống mã nhân viên cũ không
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="employeeCode"></param>
+        /// <returns></returns>
+        /// created by BVHoang(30/01/2024)
+        public bool CheckDuplicateForUpdate(Guid employeeId, string employeeCode)
+        {
+            // 1.khởi tạo chuỗi kết nối với maria db
+            var sqlConnection = new MySqlConnection(ConnectString);
+            // câu lệnh thực hiện lấy ra nhân viên có mã giống với mã truyền vào 
+            var sqlCheck = "Select EmployeeCode FROM Employee WHERE EmployeeId = @employeeId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@employeeId", employeeId);
+            var result = sqlConnection.QueryFirstOrDefault<string>(sqlCheck, parameters);
+            if (result != null && result.Equals(employeeCode)==true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
         /// phân trang 
         /// </summary>
         /// <param name="pageSize"></param>
@@ -66,11 +91,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
-                //var sqlCommand = " SELECT EmployeeId, EmployeeCode, EmployeeName, Gender,GenderName" +
-                //    " IdentityCode, IdentityDate, `Position`, IdentityPlace, Address, PhoneNumber," +
-                //    " LandlinePhone, Email, BankAccount, BankName,Branch, e.CreateDate, e.CreateBy," +
-                //    " e.ModifileDate, e.ModifileBy, e.DepartmentId,d.DepartmentName ,d.DepartmentCode " +
-                //    " FROM employee e INNER JOIN department d ON e.DepartmentId = d.DepartmentId";
+                
                 var sqlCommand = "SELECT * FROM Employee e INNER JOIN Department d ON e.DepartmentId = d.DepartmentId";
                 var employees = SqlConnection.Query<object>(sqlCommand);
                 return employees;

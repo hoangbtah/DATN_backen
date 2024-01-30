@@ -31,7 +31,9 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         /// <returns></returns>
         /// created by BVHoang(27/01/2024)
         bool CheckDuplicateCode(string employeeCode);
+        bool CheckDuplicateForUpdate(Guid enployeeId, string employeeCode);
       //  IEnumerable<Employee> GetEmployeeInnerDepartment();
       object GetEmployeeInnerDepartment();
+
     }
 }

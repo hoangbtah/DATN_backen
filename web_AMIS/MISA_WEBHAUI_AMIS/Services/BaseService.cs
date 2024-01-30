@@ -55,7 +55,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         {
             // validate dữ liệu
             ValidateData(entity);
-            ValidateEmployee(entity);
+            ValidateEmployeeForUpdate(entity,entityId);
 
             //thực hiện thêm mới vào database
           
@@ -104,6 +104,10 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         /// <param name="entity"></param>
         /// created by BVHoang(27/01/2024)
         protected virtual void ValidateEmployee(MISAEntity entity)
+        {
+
+        }
+        protected virtual void ValidateEmployeeForUpdate(MISAEntity entity,Guid entityId)
         {
 
         }
