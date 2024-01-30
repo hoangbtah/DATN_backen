@@ -12,7 +12,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         /// khóa chính 
         /// </summary>
         /// created by BVHoang(27/01/2024)
-        public string DepartmentId { get; set; }
+        public Guid DepartmentId { get; set; }
         /// <summary>
         /// Mã phòng ban
         /// </summary>

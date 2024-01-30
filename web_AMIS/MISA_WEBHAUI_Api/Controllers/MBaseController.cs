@@ -37,7 +37,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// </summary>
         /// <returns></returns>
         /// created by BVHoang(27/01/2024)
-        [HttpGet]
+        [HttpGet()]
         public IActionResult GetAll()
         {
             try

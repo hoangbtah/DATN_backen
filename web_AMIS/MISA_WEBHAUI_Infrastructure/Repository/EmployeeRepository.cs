@@ -71,7 +71,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 //    " LandlinePhone, Email, BankAccount, BankName,Branch, e.CreateDate, e.CreateBy," +
                 //    " e.ModifileDate, e.ModifileBy, e.DepartmentId,d.DepartmentName ,d.DepartmentCode " +
                 //    " FROM employee e INNER JOIN department d ON e.DepartmentId = d.DepartmentId";
-                var sqlCommand = "SELECT * FROM employee e INNER JOIN department d ON e.DepartmentId = d.DepartmentId";
+                var sqlCommand = "SELECT * FROM Employee e INNER JOIN Department d ON e.DepartmentId = d.DepartmentId";
                 var employees = SqlConnection.Query<object>(sqlCommand);
                 return employees;
             }
