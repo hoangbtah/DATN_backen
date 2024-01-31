@@ -77,16 +77,32 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             throw new NotImplementedException();
         }
         /// <summary>
-        /// Tìm kiếm nhân viên
+        /// Tìm kiếm nhân viên theo mã , tên, số điện thoại
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         /// created by BVHoang(27/01/2024)
-        public Employee Search(Guid employeeId)
+      
+        public object Search(string searchString)
         {
-            throw new NotImplementedException();
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                var sqlCommand = "SELECT * FROM Employee e INNER JOIN Department d ON e.DepartmentId = d.DepartmentId WHERE EmployeeCode = @employeeCode " +
+                    " OR EmployeeName LIKE @employeeName " +
+                    " OR PhoneNumber LIKE @phoneNumber ";
+
+                // Sử dụng '%' để thực hiện tìm kiếm một phần của tên
+                var parameters = new DynamicParameters();
+                parameters.Add("@employeeCode", searchString);
+                parameters.Add("@employeeName", "%" + searchString + "%");
+                parameters.Add("@phoneNumber", "%" + searchString + "%");
+
+                var employees = SqlConnection.Query<object>(sqlCommand, parameters);
+                return employees;
+            }
         }
+
         public object GetEmployeeInnerDepartment()
         {
             using (SqlConnection = new MySqlConnection(ConnectString))

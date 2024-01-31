@@ -18,7 +18,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         #endregion
 
         #region Contructor
-        public EmployeesController(IEmployeeRepository employeeRepository, IEmployeeService employeeService) : base(employeeRepository,employeeService)
+        public EmployeesController(IEmployeeRepository employeeRepository, IEmployeeService employeeService) : base(employeeRepository, employeeService)
         {
             _employeeRepository = employeeRepository;
             _employeeService = employeeService;
@@ -51,6 +51,35 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return HandleException(ex);
             }
         }
+        /// <summary>
+        /// lấy ra nhân viên theo tìm kiếm mã , tên , số điện thoại
+        /// </summary>
+        /// <param name="employeeCode"></param>
+        /// <returns></returns>
+        /// created by BVHoang(31/01/2024)
+        [HttpGet("employee/{searchString}")]
+        
+        public IActionResult GetEmployeeBySearch(string searchString) 
+        {
+            try
+            {
+                var data = _employeeRepository.Search(searchString);
+
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+        }
+        
         #endregion
 
 
