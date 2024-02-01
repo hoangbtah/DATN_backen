@@ -85,6 +85,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         /// <param name="entity"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
+        /// created by BVHoang(27/01/2024)
         public int Insert(MISAEntity entity)
         {
             // build câu chuỗi sql thực hiện thêm mới dữ liệu
@@ -143,6 +144,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         /// <param name="enityId"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
+        /// created by BVHoang(27/01/2024)
         public int Update(MISAEntity entity, Guid entityId)
         {
             // build câu chuỗi sql thực hiện cập nhật dữ liệu

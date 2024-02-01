@@ -166,6 +166,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         protected IActionResult HandleException(Exception ex)
         {
             var error = new ErrorService();
@@ -179,6 +180,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         protected IActionResult HandleMISAException(MISAvalidateException ex)
         {
             var error = new ErrorService(); 

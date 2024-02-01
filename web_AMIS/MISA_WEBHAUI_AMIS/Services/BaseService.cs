@@ -107,6 +107,12 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         {
 
         }
+        /// <summary>
+        /// kiểm tra dữ liệu của nhân viên đối với việc cập nhật nhân viên 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="entityId"></param>
+        /// created by BVHoang(27/01/2024)
         protected virtual void ValidateEmployeeForUpdate(MISAEntity entity,Guid entityId)
         {
 

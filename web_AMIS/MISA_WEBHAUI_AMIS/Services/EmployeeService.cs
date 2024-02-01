@@ -42,6 +42,13 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
             }
 
         }
+        /// <summary>
+        /// kiểm tra nhân viên khi cập nhật
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <param name="entitiId"></param>
+        /// <exception cref="MISAvalidateException"></exception>
+        /// created by BVHoang(27/01/2024)
         protected override void ValidateEmployeeForUpdate(Employee employee,Guid entitiId)
         {
             var isDuplicateForUpdate = _employeeRepository.CheckDuplicateForUpdate(entitiId, employee.EmployeeCode);
@@ -62,6 +69,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         /// </summary>
         /// <param name="employee"></param>
         /// <exception cref="MISAvalidateException"></exception>
+        /// created by BVHoang(27/01/2024)
         public void CheckEmployee(Employee employee)
         {
             // check email

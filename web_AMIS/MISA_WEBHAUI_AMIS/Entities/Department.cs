@@ -8,6 +8,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
 {
     public class Department
     {
+        #region Property
         /// <summary>
         /// khóa chính 
         /// </summary>
@@ -43,5 +44,6 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         /// </summary>
         /// created by BVHoang(27/01/2024)
         public string? ModifileBy { get; set; }
+        #endregion
     }
 }

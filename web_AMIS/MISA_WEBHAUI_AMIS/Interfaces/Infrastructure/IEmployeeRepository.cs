@@ -31,9 +31,20 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         /// <returns></returns>
         /// created by BVHoang(27/01/2024)
         bool CheckDuplicateCode(string searchString);
+        /// <summary>
+        /// kiểm tra mã nhân viên cho việc cập nhật dữ liệu
+        /// </summary>
+        /// <param name="enployeeId"></param>
+        /// <param name="employeeCode"></param>
+        /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
         bool CheckDuplicateForUpdate(Guid enployeeId, string employeeCode);
-      //  IEnumerable<Employee> GetEmployeeInnerDepartment();
-      object GetEmployeeInnerDepartment();
+        /// <summary>
+        /// lấy nhân viên kèm theo thông tin phòng ban
+        /// </summary>
+        /// <returns></returns>
+        /// created by BVHoang(27/01/2024)
+        object GetEmployeeInnerDepartment();
 
     }
 }
