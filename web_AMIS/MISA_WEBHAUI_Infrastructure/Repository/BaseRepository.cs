@@ -15,7 +15,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
     public class BaseRepository<MISAEntity> : IBaseRepository<MISAEntity>
     {
         #region Connect
-        protected readonly string ConnectString = "Host= localhost;Port=3306;Database=misa_webhaui_amis;User Id= root;Password=12345678";
+        protected readonly string ConnectString = "Host= localhost;Port=3306;Database=dbferfurm;User Id= root;Password=12345678";
         protected MySqlConnection SqlConnection;
         #endregion
 
