@@ -14,9 +14,13 @@ builder.Services.AddSwaggerGen();
 
 // xử lý DI
 builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+builder.Services.AddScoped<ICommentRepository,CommentRepository>();
+builder.Services.AddScoped<ICommentService,CommentService>();
 builder.Services.AddScoped<IEmployeeService,EmployeeService>();
 builder.Services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
 builder.Services.AddScoped(typeof(IBaseRepository<>),typeof(BaseRepository<>));
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 // Xử lý cros policy
 builder.Services.AddCors(options =>
 {
