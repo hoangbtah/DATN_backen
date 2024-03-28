@@ -20,7 +20,7 @@ namespace MISA_WEBHAUI_Api.Controllers
         {
             _commentRepository = commentRepository;
         }
-        [HttpGet("comment")]
+        [HttpGet("comment/{ProductId}")]
         public IActionResult GetCommontByProduct(Guid ProductId)
         {
             try
