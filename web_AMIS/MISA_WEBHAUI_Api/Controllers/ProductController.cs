@@ -4,6 +4,7 @@ using MISA_WEBHAUI_AMIS_Core.Exceptions;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
 using MISA_WEBHAUI_Infrastructure.Repository;
+using System.Timers;
 
 
 
@@ -75,6 +76,26 @@ namespace MISA_WEBHAUI_Api.Controllers
 
                 return Ok(data);
 
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+        }
+        [HttpGet("products/search")]
+        public IActionResult GetProductSearch(string? search,int pagenumber,int pagesize)
+        {
+            try
+            {
+                
+                    var data = _productRepository.GetProductSearch(search,pagenumber,pagesize);
+                    return Ok(data);
             }
             catch (MISAvalidateException ex)
             {

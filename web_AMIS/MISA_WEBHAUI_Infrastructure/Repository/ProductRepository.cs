@@ -50,5 +50,28 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return products;
             }
         }
+        public object GetProductSearch(string search, int pagenumber, int pagesize)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
+                    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId "+
+                   
+                     "WHERE 1=1 ";
+                
+
+                // Sử dụng '%' để thực hiện tìm kiếm một phần của tên
+                var parameters = new DynamicParameters();
+                if (!string.IsNullOrEmpty(search))
+                {
+                    sqlCommand += "AND e.Description LIKE @productName ";
+                    parameters.Add("@productName", "%" + search + "%");
+                }
+             
+                var employees = SqlConnection.Query<object>(sqlCommand, parameters);
+                employees= employees.Skip((pagenumber -1)*pagesize).Take(pagesize);
+                return employees;
+            }
+        }
     }
 }
