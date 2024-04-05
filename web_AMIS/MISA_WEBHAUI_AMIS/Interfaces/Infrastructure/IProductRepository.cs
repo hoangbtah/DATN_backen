@@ -17,6 +17,6 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         object GetProductByManufactorer(Guid manufactorerId);
         object GetProductByCatagory(Guid catagoryId);
 
-        object GetProductSearch(string search,int pagenumber, int pagesize);
+        object GetProductSearch(string search,decimal? from, decimal? to, int pagenumber, int pagesize);
     }
 }

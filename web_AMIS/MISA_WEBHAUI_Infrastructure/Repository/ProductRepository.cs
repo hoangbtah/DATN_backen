@@ -50,7 +50,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return products;
             }
         }
-        public object GetProductSearch(string search, int pagenumber, int pagesize)
+        public object GetProductSearch(string search, decimal? from, decimal? to, int pagenumber, int pagesize)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
@@ -64,11 +64,25 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 var parameters = new DynamicParameters();
                 if (!string.IsNullOrEmpty(search))
                 {
-                    sqlCommand += "AND e.Description LIKE @productName ";
+                    sqlCommand += "AND e.ProductName LIKE @productName ";
                     parameters.Add("@productName", "%" + search + "%");
                 }
-             
+                // Thêm điều kiện lọc theo giá nếu có giá trị từ và đến
+                if (from.HasValue)
+                {
+                    sqlCommand += "AND e.Price >= @from ";
+                    parameters.Add("@from", from.Value);
+                }
+                if (to.HasValue)
+                {
+                    sqlCommand += "AND e.Price <= @to ";
+                    parameters.Add("@to", to.Value);
+                }
+
+
+
                 var employees = SqlConnection.Query<object>(sqlCommand, parameters);
+
                 employees= employees.Skip((pagenumber -1)*pagesize).Take(pagesize);
                 return employees;
             }

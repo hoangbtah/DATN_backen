@@ -89,12 +89,12 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
         }
         [HttpGet("products/search")]
-        public IActionResult GetProductSearch(string? search,int pagenumber,int pagesize)
+        public IActionResult GetProductSearch(string? search, decimal? from, decimal? to,int pagenumber,int pagesize)
         {
             try
             {
                 
-                    var data = _productRepository.GetProductSearch(search,pagenumber,pagesize);
+                    var data = _productRepository.GetProductSearch(search,from,to,pagenumber,pagesize);
                     return Ok(data);
             }
             catch (MISAvalidateException ex)
