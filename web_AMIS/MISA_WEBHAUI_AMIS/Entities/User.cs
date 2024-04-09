@@ -11,9 +11,10 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         public Guid UserId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
         public string Address { get; set; }
-        public int Role {  get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
+        public string Role { get; set; } = string.Empty;
         public string PhoneNumber { get; set; }
     }
 }

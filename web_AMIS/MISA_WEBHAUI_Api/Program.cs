@@ -1,7 +1,10 @@
-﻿using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
 using MISA_WEBHAUI_AMIS_Core.Services;
 using MISA_WEBHAUI_Infrastructure.Repository;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,7 @@ builder.Services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
 builder.Services.AddScoped(typeof(IBaseRepository<>),typeof(BaseRepository<>));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 // Xử lý cros policy
 builder.Services.AddCors(options =>
 {
@@ -32,8 +36,19 @@ builder.Services.AddCors(options =>
            policy.WithMethods("GET", "POST", "PUT", "DELETE");
        });
 });
-
-
+// xac thuc
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        };
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,7 +59,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors();
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
