@@ -12,3 +12,4 @@ E:\Web_Amis\web_AMIS\MISA_WEBHAUI_AMIS\obj\Debug\net6.0\MISA_WEBHAUI_AMIS_Core.p
 E:\Web_Amis\web_AMIS\MISA_WEBHAUI_AMIS\obj\Debug\net6.0\ref\MISA_WEBHAUI_AMIS_Core.dll
 E:\Web_Amis\web_AMIS\MISA_WEBHAUI_AMIS\obj\Debug\net6.0\MISA_WEBHAUI_AMIS_Core.csproj.GenerateResource.cache
 E:\Web_Amis\web_AMIS\MISA_WEBHAUI_AMIS\obj\Debug\net6.0\MISA_WEBHAUI_AMIS_Core.Resources.ResourceVN.resources
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_AMIS\obj\Debug\net6.0\MISA_WEBHAUI_AMIS_Core.csproj.AssemblyReference.cache

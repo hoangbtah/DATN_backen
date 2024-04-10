@@ -39,6 +39,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -106,9 +112,13 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
-            "Microsoft.AspNetCore.Hosting.Abstractions": {
+            "Microsoft.AspNetCore.Hosting.Server.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.20.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -181,6 +191,10 @@
             "Dapper": {
               "target": "Package",
               "version": "[2.1.28, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             },
             "MySqlConnector": {
               "target": "Package",

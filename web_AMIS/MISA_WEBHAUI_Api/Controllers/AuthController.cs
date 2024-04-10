@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
+
 namespace MISA_WEBHAUI_Api.Controllers
 {
     [Route("api/[controller]")]
@@ -24,9 +25,9 @@ namespace MISA_WEBHAUI_Api.Controllers
         
         public AuthController(IAuthRepository authRepository,IConfiguration configuration)
         {
-           
+            _conficguration = configuration;
             _authRepository = authRepository;
-            _conficguration= configuration;
+           
         }
 
 
@@ -81,7 +82,7 @@ namespace MISA_WEBHAUI_Api.Controllers
 
             // Đăng nhập thành công: tạo và trả về token JWT
             string token = CreateToken(user);
-            return Ok("Đăng nhập thành công");
+            return Ok(token);
 
            
         }
@@ -92,32 +93,17 @@ namespace MISA_WEBHAUI_Api.Controllers
                 new Claim(ClaimTypes.Name,user.Name),
                  new Claim(ClaimTypes.Role,user.Role)
             };
+            var key = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey
+                (System.Text.Encoding.UTF8.GetBytes(_conficguration.GetSection("AppSettings:Token").Value));
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.
-                GetBytes(_conficguration.GetSection("AppSettings:Token").Value));
 
             var creads = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var token = new JwtSecurityToken(
               claims: claims,
               expires: DateTime.Now.AddDays(1),
               signingCredentials: creads);
-            //var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_secret_key_here"));
-            //var credentials = new SigningCredentials(securityKey.AsSecurityKey(), SecurityAlgorithms.HmacSha256);
 
-            //var claims = new[]
-            //{
-            //    new Claim(ClaimTypes.Name, user.Name),
-            //    new Claim(ClaimTypes.Role, user.Role)
-            //    // Các thông tin khác có thể thêm vào trong token
-            //};
-
-            //var token = new JwtSecurityToken(
-            //    //issuer: "your_issuer_here",
-            //    //audience: "your_audience_here",
-            //    claims: claims,
-            //    expires: DateTime.Now.AddHours(1), // Thời gian hết hạn của token
-            //    signingCredentials: credentials);
-
+           
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
 
@@ -130,24 +116,24 @@ namespace MISA_WEBHAUI_Api.Controllers
                 passwordhand = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
-     
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet("getname")]
-        //public IActionResult getname()
-        //{
-        //    return Ok("my name is ");
-        //}
-        //[Authorize]
-        //[HttpGet("getpassword")]
-        //public IActionResult getpassword()
-        //{
-        //    return Ok("my password");
-        //}
 
-        //[HttpGet("getstring")]
-        //public IActionResult getstring()
-        //{
-        //    return Ok("my string");
-        //}
+        [Authorize(Roles = "Admin")]
+        [HttpGet("getname")]
+        public IActionResult getname()
+        {
+            return Ok("my name is ");
+        }
+        [Authorize]
+        [HttpGet("getpassword")]
+        public IActionResult getpassword()
+        {
+            return Ok("my password");
+        }
+
+        [HttpGet("getstring")]
+        public IActionResult getstring()
+        {
+            return Ok("my string");
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         Task<User> GetUserByUsernameAsync(string username);
         Task<int> CreateUserAsync(User user);
         Task<bool> VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt);
+       
     }
 }

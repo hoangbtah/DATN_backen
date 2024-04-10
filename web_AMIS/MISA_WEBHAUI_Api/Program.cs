@@ -26,15 +26,24 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 // Xử lý cros policy
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(
+//       policy =>
+//       {
+//           policy.WithOrigins("*");
+//           policy.WithHeaders("Origin", "Content-Type", "Accept");
+//           policy.WithMethods("GET", "POST", "PUT", "DELETE");
+//       });
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-       policy =>
-       {
-           policy.WithOrigins("*");
-           policy.WithHeaders("Origin", "Content-Type", "Accept");
-           policy.WithMethods("GET", "POST", "PUT", "DELETE");
-       });
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:8080") // Thay đổi thành nguồn gốc của Vue.js của bạn
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 // xac thuc
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

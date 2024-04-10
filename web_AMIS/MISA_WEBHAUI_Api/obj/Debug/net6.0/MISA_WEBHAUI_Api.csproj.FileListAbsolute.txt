@@ -39,3 +39,10 @@ E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\obj\Debug\net6.0\refint\MISA_WEBHAUI_Api.d
 E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\obj\Debug\net6.0\MISA_WEBHAUI_Api.pdb
 E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\obj\Debug\net6.0\MISA_WEBHAUI_Api.genruntimeconfig.cache
 E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\obj\Debug\net6.0\ref\MISA_WEBHAUI_Api.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+E:\Web_Amis\web_AMIS\MISA_WEBHAUI_Api\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
