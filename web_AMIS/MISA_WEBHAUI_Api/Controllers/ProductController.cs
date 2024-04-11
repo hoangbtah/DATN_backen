@@ -19,7 +19,8 @@ namespace MISA_WEBHAUI_Api.Controllers
         #endregion
 
         #region Contructor
-        public ProductController(IProductRepository productRepository, IProductService productService) : base(productRepository, productService)
+        public ProductController(IProductRepository productRepository, IProductService productService) 
+            : base(productRepository, productService)
         {
             _productRepository = productRepository;
             _productService = productService;
