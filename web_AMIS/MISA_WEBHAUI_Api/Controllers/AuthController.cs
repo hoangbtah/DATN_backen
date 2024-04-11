@@ -45,7 +45,10 @@ namespace MISA_WEBHAUI_Api.Controllers
                     Name = request.Name,
                     Role = request.Role,
                     PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt
+                    PasswordSalt = passwordSalt,
+                    Address=request.Address,
+                    Email=request.Email,
+                    PhoneNumber=request.PhoneNumber
                 };
 
                 int affectedRows = await _authRepository.CreateUserAsync(user);
@@ -82,9 +85,27 @@ namespace MISA_WEBHAUI_Api.Controllers
 
             // Đăng nhập thành công: tạo và trả về token JWT
             string token = CreateToken(user);
-            return Ok(token);
+            return Ok(token);     
+        }
+        [HttpPost("user")]
+        public async Task<ActionResult<string>> GetUser(UserDto request)
+        {
+            var user = await _authRepository.GetUserByUsernameAsync(request.Name);
 
-           
+            if (user == null)
+            {
+                return BadRequest("Tên đăng nhập không tồn tại.");
+            }
+
+            bool isPasswordValid = await _authRepository.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt);
+
+            if (!isPasswordValid)
+            {
+                return BadRequest("Mật khẩu không đúng.");
+            }
+
+            // Đăng nhập thành công: tạo và trả về token JWT
+            return Ok(user);
         }
         private string CreateToken(User user)
         {

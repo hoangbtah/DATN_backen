@@ -68,11 +68,11 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
         }
         [HttpGet("manufactorer/{manufactorerId}/products")]
-        public IActionResult GetProductByManufactorer(Guid manufactorerId)
+        public IActionResult GetProductByManufactorer(Guid manufactorerId, string? search, decimal? from, decimal? to, int pagenumber, int pagesize)
         {
             try
             {
-                var data = _productRepository.GetProductByManufactorer(manufactorerId);
+                var data = _productRepository.GetProductByManufactorer(manufactorerId, search, from, to, pagenumber, pagesize);
 
                 return Ok(data);
 

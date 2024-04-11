@@ -24,17 +24,54 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return products;
             }
         }
-        public object GetProductByManufactorer(Guid manufactorerId) 
+        public object GetProductByManufactorer(Guid manufactorerId, string search, 
+            decimal? from, decimal? to, int pagenumber, int pagesize) 
         {
+            //using (SqlConnection = new MySqlConnection(ConnectString))
+            //{
+
+            //    var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
+            //        "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId WHERE e.ManufactorerId=@manufactorerId ";
+            //    var parameters = new DynamicParameters();
+            //    parameters.Add("@manufactorerId", manufactorerId);
+            //    var products = SqlConnection.Query<object>(sqlCommand,parameters);
+            //    return products;
+            //}
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
                 var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
-                    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId WHERE e.ManufactorerId=@manufactorerId ";
+                    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId WHERE e.ManufactorerId=@manufactorerId " +
+
+                     "AND 1=1 ";
+
+
+                // Sử dụng '%' để thực hiện tìm kiếm một phần của tên
                 var parameters = new DynamicParameters();
                 parameters.Add("@manufactorerId", manufactorerId);
-                var products = SqlConnection.Query<object>(sqlCommand,parameters);
-                return products;
+                if (!string.IsNullOrEmpty(search))
+                {
+                    sqlCommand += "AND e.ProductName LIKE @productName ";
+                    parameters.Add("@productName", "%" + search + "%");
+                }
+                // Thêm điều kiện lọc theo giá nếu có giá trị từ và đến
+                if (from.HasValue)
+                {
+                    sqlCommand += "AND e.Price >= @from ";
+                    parameters.Add("@from", from.Value);
+                }
+                if (to.HasValue)
+                {
+                    sqlCommand += "AND e.Price <= @to ";
+                    parameters.Add("@to", to.Value);
+                }
+
+
+
+                var employees = SqlConnection.Query<object>(sqlCommand, parameters);
+
+                employees = employees.Skip((pagenumber - 1) * pagesize).Take(pagesize);
+                return employees;
             }
         }
         public object GetProductByCatagory(Guid catagoryId)

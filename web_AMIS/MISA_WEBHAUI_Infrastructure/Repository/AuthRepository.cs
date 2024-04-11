@@ -32,8 +32,8 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             {
 
                 string query = @"
-                INSERT INTO User (USerId ,Name, PasswordHash, PasswordSalt, Role)
-                VALUES (@UserId,@Name, @PasswordHash, @PasswordSalt, @Role);";
+                INSERT INTO User (USerId ,Name, PasswordHash, PasswordSalt, Role,Email,PhoneNumber,Address)
+                VALUES (@UserId,@Name, @PasswordHash, @PasswordSalt, @Role,@Email,@PhoneNumber,@Address);";
 
                 return await SqlConnection.ExecuteAsync(query, user);
             }
