@@ -56,6 +56,18 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return await SqlConnection.ExecuteAsync(query, parameters);
             }
         }
+        public object GetCartByUserId(Guid userId)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = "SELECT * FROM Cart  WHERE UserId=@userId";
+                var parameters = new DynamicParameters();
+                parameters.Add("@userId", userId);
+                var products = SqlConnection.Query<object>(sqlCommand, parameters);
+                return products;
+            }
+        }
 
     }
 }

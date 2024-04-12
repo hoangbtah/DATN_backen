@@ -27,16 +27,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         public object GetProductByManufactorer(Guid manufactorerId, string search, 
             decimal? from, decimal? to, int pagenumber, int pagesize) 
         {
-            //using (SqlConnection = new MySqlConnection(ConnectString))
-            //{
-
-            //    var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
-            //        "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId WHERE e.ManufactorerId=@manufactorerId ";
-            //    var parameters = new DynamicParameters();
-            //    parameters.Add("@manufactorerId", manufactorerId);
-            //    var products = SqlConnection.Query<object>(sqlCommand,parameters);
-            //    return products;
-            //}
+            
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
