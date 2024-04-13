@@ -14,5 +14,6 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         Task<Cart> GetCartByUP(Guid userId, Guid productId);
 
         object GetCartByUserId(Guid userId);
+       // object DeleteCart(Guid cartId);
     }
 }

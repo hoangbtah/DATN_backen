@@ -57,7 +57,10 @@ namespace MISA_WEBHAUI_Api.Controllers
                     int affectedRows = await _shoppingCartRepository.UpdateShoppingCart(cartItem);
                 }
 
-                return Ok("Thêm thành công");
+              //  var data = _shoppingCartRepository.GetCartByUserId(request.UserId);
+
+              //  return Ok(data);
+               return Ok("Thêm thành công");
 
             }
 
@@ -89,6 +92,27 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return HandleException(ex);
             }
         }
+        //[HttpDelete("carts/{cartId}")]
+        //public IActionResult DeleteCart(Guid cartId)
+        //{
+        //    try
+        //    {
+
+        //        var data = _shoppingCartRepository.DeleteCart(cartId);
+        //      //   var data = _shoppingCartRepository.GetCartByUserId(userId);
+        //        return Ok(data);
+        //    }
+        //    catch (MISAvalidateException ex)
+        //    {
+
+        //        return HandleMISAException(ex);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return HandleException(ex);
+        //    }
+        //}
 
     }
 }

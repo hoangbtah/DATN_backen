@@ -68,6 +68,17 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return products;
             }
         }
+        //public object DeleteCart(Guid cartId)
+        //{
+        //    using (SqlConnection = new MySqlConnection(ConnectString))
+        //    {
 
+        //        var sqlCommand = "DELETE FROM Cart  WHERE CartId=@cartId";
+        //        var parameters = new DynamicParameters();
+        //        parameters.Add("@cartId", cartId);
+        //        var products = SqlConnection.Query<object>(sqlCommand, parameters);
+        //        return products;
+        //    }
+        //}
     }
 }
