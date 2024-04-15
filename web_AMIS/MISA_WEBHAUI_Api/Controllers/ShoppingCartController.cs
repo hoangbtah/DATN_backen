@@ -17,7 +17,8 @@ namespace MISA_WEBHAUI_Api.Controllers
         IShoppingCartRepository _shoppingCartRepository;
         IShoppingCartService _shoppingCartService;
 
-        public ShoppingCartController(IShoppingCartRepository shoppingCartRepository,IShoppingCartService shoppingCartService)
+        public ShoppingCartController(IShoppingCartRepository shoppingCartRepository,
+            IShoppingCartService shoppingCartService)
             :base(shoppingCartRepository ,shoppingCartService)
         {
             _shoppingCartRepository = shoppingCartRepository;
@@ -92,27 +93,7 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return HandleException(ex);
             }
         }
-        //[HttpDelete("carts/{cartId}")]
-        //public IActionResult DeleteCart(Guid cartId)
-        //{
-        //    try
-        //    {
-
-        //        var data = _shoppingCartRepository.DeleteCart(cartId);
-        //      //   var data = _shoppingCartRepository.GetCartByUserId(userId);
-        //        return Ok(data);
-        //    }
-        //    catch (MISAvalidateException ex)
-        //    {
-
-        //        return HandleMISAException(ex);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return HandleException(ex);
-        //    }
-        //}
+      
 
     }
 }

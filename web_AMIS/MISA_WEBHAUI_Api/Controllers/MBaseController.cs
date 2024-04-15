@@ -95,8 +95,10 @@ namespace MISA_WEBHAUI_Api.Controllers
             try
             {
                 var data = _baseService.InsertServie(entity);
-               
+
+
                 return StatusCode(201,data);
+               // return CreatedAtAction(nameof(GetById), new { id = entity.entityId }, orderProduct);
 
             }
             catch (MISAvalidateException ex)

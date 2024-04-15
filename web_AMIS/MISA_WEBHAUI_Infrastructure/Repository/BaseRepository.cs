@@ -133,9 +133,10 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
                 var result = SqlConnection.Execute(sql:sqlCommand,param:parameters);
-                return result;
-            }    
-           
+               return result;
+            }
+           // return propValue;
+
         }
         /// <summary>
         /// Chỉnh sửa dữ liệu
