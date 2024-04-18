@@ -10,5 +10,6 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
     public interface IOrderProductRepository:IBaseRepository<OrderProduct>
     {
         Task<int> CreateOrder(OrderProduct orderProduct);
+        object GetOrderAllInfor();
     }
 }

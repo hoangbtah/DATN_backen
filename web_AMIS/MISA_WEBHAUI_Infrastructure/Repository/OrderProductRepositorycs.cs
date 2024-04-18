@@ -18,11 +18,22 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             {
 
                 string query = @"
-                INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate)
-                VALUES (@OrderProductId,@UserId, @OrderDate);";
+                INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate,Phone,OrderAddress)
+                VALUES (@OrderProductId,@UserId, @OrderDate,@Phone,@OrderAddress);";
 
 
                 return await SqlConnection.ExecuteAsync(query, orderProduct);
+            }
+        }
+        public object GetOrderAllInfor()
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = "SELECT * FROM OrderProduct e INNER JOIN User d ON e.UserId = d.UserId ";
+                   
+                var orders = SqlConnection.Query<object>(sqlCommand);
+                return orders;
             }
         }
     }
