@@ -15,12 +15,18 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
     {
         #region Fields
         IBaseRepository<MISAEntity> _baseRepository;
+        private IOrderDetailService orderDetailService;
         #endregion
 
         #region Contructor
         public BaseService(IBaseRepository<MISAEntity> baseRepository)
         {
             _baseRepository = baseRepository;
+        }
+
+        public BaseService(IOrderDetailService orderDetailService)
+        {
+            this.orderDetailService = orderDetailService;
         }
         #endregion
 

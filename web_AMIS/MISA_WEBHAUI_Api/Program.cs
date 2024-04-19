@@ -29,6 +29,10 @@ builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IOrderProductRepository,OrderProductRepositorycs>();
 builder.Services.AddScoped<IOrderProductService, OrderProductService>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+
+
 // Xử lý cros policy
 //builder.Services.AddCors(options =>
 //{
