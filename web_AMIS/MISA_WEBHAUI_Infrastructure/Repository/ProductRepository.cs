@@ -19,7 +19,8 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             {
 
                 var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
-                    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId ";
+                    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId "+
+                    " LEFT JOIN Discount discount ON e.ProductId = discount.ProductId";
                 var products = SqlConnection.Query<object>(sqlCommand);
                 return products;
             }

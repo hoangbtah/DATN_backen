@@ -15,7 +15,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
     {
         #region Fields
         IBaseRepository<MISAEntity> _baseRepository;
-        private IOrderDetailService orderDetailService;
+     //   private IOrderDetailService orderDetailService;
         #endregion
 
         #region Contructor
@@ -24,10 +24,10 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
             _baseRepository = baseRepository;
         }
 
-        public BaseService(IOrderDetailService orderDetailService)
-        {
-            this.orderDetailService = orderDetailService;
-        }
+        //public BaseService(IOrderDetailService orderDetailService)
+        //{
+        //    this.orderDetailService = orderDetailService;
+        //}
         #endregion
 
         #region Method

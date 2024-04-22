@@ -4,6 +4,7 @@ using MISA_WEBHAUI_AMIS_Core.Entities;
 using MISA_WEBHAUI_AMIS_Core.Exceptions;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
+using MISA_WEBHAUI_AMIS_Core.Services;
 using MISA_WEBHAUI_Infrastructure.Repository;
 
 namespace MISA_WEBHAUI_Api.Controllers
@@ -14,11 +15,13 @@ namespace MISA_WEBHAUI_Api.Controllers
     public class CommentController : MBaseController<Comment>
     {
         ICommentRepository _commentRepository;
+        ICommentService _commentService;
         #region Contructor
-        public CommentController(ICommentRepository commentRepository,
-            IBaseService<Comment> baseService) : base(commentRepository, baseService)
+        public CommentController(ICommentRepository commentRepository, ICommentService commentService)
+          : base(commentRepository, commentService)
         {
             _commentRepository = commentRepository;
+            _commentService = commentService;
         }
         [HttpGet("comment/{ProductId}")]
         public IActionResult GetCommontByProduct(Guid ProductId)
