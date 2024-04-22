@@ -13,6 +13,8 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         Task<int> UpdateShoppingCart(Cart product);
         Task<Cart> GetCartByUP(Guid userId, Guid productId);
 
+        Task<Product> GetProductById(Guid productId);
+
         object GetCartByUserId(Guid userId);
        // object DeleteCart(Guid cartId);
     }

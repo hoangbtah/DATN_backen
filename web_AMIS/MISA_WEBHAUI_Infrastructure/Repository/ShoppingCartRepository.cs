@@ -68,6 +68,18 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return products;
             }
         }
+        public async Task<Product> GetProductById(Guid productId)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = "SELECT * FROM Product  WHERE ProductId=@productId";
+                var parameters = new DynamicParameters();
+                parameters.Add("@productId", productId);
+                var product = SqlConnection.QueryFirstOrDefault<Product>(sqlCommand, parameters);
+                return product;
+            }
+        }
         //public object DeleteCart(Guid cartId)
         //{
         //    using (SqlConnection = new MySqlConnection(ConnectString))
