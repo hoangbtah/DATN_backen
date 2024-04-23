@@ -109,7 +109,28 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return HandleException(ex);
             }
         }
+        [HttpGet("getProductSale")]
+        public IActionResult GetProductSale()
+        {
+            try
+            {
+                var data = _productRepository.GetProductSale();
 
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+
+        }
 
 
 

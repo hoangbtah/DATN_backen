@@ -17,9 +17,12 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
+                //string query = @"
+                //INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate,Phone,OrderAddress)
+                //VALUES (@OrderProductId,@UserId, @OrderDate,@Phone,@OrderAddress);";
                 string query = @"
-                INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate,Phone,OrderAddress)
-                VALUES (@OrderProductId,@UserId, @OrderDate,@Phone,@OrderAddress);";
+                INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate)
+                VALUES (@OrderProductId,@UserId, @OrderDate);";
 
 
                 return await SqlConnection.ExecuteAsync(query, orderProduct);

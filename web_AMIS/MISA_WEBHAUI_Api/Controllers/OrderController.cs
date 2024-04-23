@@ -34,8 +34,8 @@ namespace MISA_WEBHAUI_Api.Controllers
                         OrderProductId = Guid.NewGuid(),
                         OrderDate = DateTime.Now,
                         UserId= request.UserId,
-                        Phone= request.Phone,
-                        OrderAddress=request.OrderAddress
+                        //Phone= request.Phone,
+                        //OrderAddress=request.OrderAddress
                     };
 
                     int affectedRows = await _orderProductRepository.CreateOrder(order);

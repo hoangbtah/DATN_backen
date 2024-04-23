@@ -13,7 +13,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public int Status {  get; set; }
-        public string Phone { get; set; }
-        public string OrderAddress { get; set; }
+        //public string Phone { get; set; }
+        //public string OrderAddress { get; set; }
     }
 }

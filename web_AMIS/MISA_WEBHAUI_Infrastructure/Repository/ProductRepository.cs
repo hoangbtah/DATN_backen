@@ -83,11 +83,19 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
-                var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
-                    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId "+
-                   
-                     "WHERE 1=1 ";
-                
+                //var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
+                //    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId " +
+                //     "LEFT JOIN Discount discount ON e.ProductId = discount.ProductId "+
+                //     "WHERE 1=1 ";
+                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price, " +
+                         "e.CatagoryId, e.ManufactorerId, d.CatagoryName, m.ManufactorerName, " +
+                         "discount.DiscountId, discount.DiscountPercent, discount.StartDate, discount.EndDate " +
+                         "FROM Product e " +
+                         "INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
+                         "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId " +
+                         "LEFT JOIN Discount discount ON e.ProductId = discount.ProductId " +
+                         "WHERE 1=1 ";
+
 
                 // Sử dụng '%' để thực hiện tìm kiếm một phần của tên
                 var parameters = new DynamicParameters();
@@ -114,6 +122,20 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
 
                 employees= employees.Skip((pagenumber -1)*pagesize).Take(pagesize);
                 return employees;
+            }
+        }
+        public object GetProductSale()
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = "SELECT n.ProductId, e.ProductName,e.Quantity,e.Price , m.OrderDate from " +
+                    "OrderDetail n LEFT JOIN Product e ON n.ProductId= e.ProductId " +
+                    "INNER JOIN OrderProduct m ON n.OrderId = m.OrderProductId ";
+                //var parameters = new DynamicParameters();
+                //parameters.Add("@OrderId", orderId);
+                var products = SqlConnection.Query<object>(sqlCommand);
+                return products;
             }
         }
     }
