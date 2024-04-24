@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Dapper;
 using MISA_WEBHAUI_AMIS_Core.Entities;
 using MySqlConnector;
+using System.Text.RegularExpressions;
 
 namespace MISA_WEBHAUI_Infrastructure.Repository
 {
@@ -137,6 +138,33 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 var products = SqlConnection.Query<object>(sqlCommand);
                 return products;
             }
+        }
+        public object GetProductSaleByYear(int year)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = "SELECT MONTH(o.OrderDate) AS Month,SUM(s.Quantity) AS Quantity " +
+                                 //"SUM(p.Price * s.Quantity) AS SalesAmount " +
+                                 "FROM OrderDetail s " +
+                                 "JOIN Product p ON s.ProductId = p.ProductId " +
+                                 "JOIN OrderProduct o ON s.OrderId = o.OrderProductId " +
+                                 "WHERE YEAR(o.OrderDate) = @year " +
+                                 "GROUP BY MONTH(o.OrderDate)" +
+                                 " ORDER BY Month ";
+                var parameters = new DynamicParameters();
+                parameters.Add("@year", year);
+                var products = SqlConnection.Query<object>(sqlCommand,parameters);
+                return products;
+            }
+//            SELECT(m.ManufactorerName) AS Hang, SUM(s.Quantity) AS Quantity,
+//       SUM(p.Price * s.Quantity) AS SalesAmount
+//FROM OrderDetail s
+//JOIN Product p ON s.ProductId = p.ProductId
+//JOIN OrderProduct o ON s.OrderId = o.OrderProductId
+//Join Manufactorer m ON p.ManufactorerId = m.ManufactorerId
+//WHERE YEAR(o.OrderDate) = 2024 AND MONTH(o.OrderDate) = 5
+//GROUP BY(m.ManufactorerName)
         }
     }
 }
