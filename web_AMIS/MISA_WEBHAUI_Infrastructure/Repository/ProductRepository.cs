@@ -19,9 +19,14 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
-                    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId "+
-                    " LEFT JOIN Discount discount ON e.ProductId = discount.ProductId";
+                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price, " +
+                         "e.CatagoryId, e.ManufactorerId, d.CatagoryName, m.ManufactorerName, " +
+                         "discount.DiscountId, discount.DiscountPercent, discount.StartDate, discount.EndDate " +
+                         "FROM Product e " +
+                         "INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
+                         "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId " +
+                         "LEFT JOIN Discount discount ON e.ProductId = discount.ProductId ";
+                        
                 var products = SqlConnection.Query<object>(sqlCommand);
                 return products;
             }
@@ -33,10 +38,18 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
-                    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId WHERE e.ManufactorerId=@manufactorerId " +
+                //var sqlCommand = "SELECT * FROM Product e INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
+                //    "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId WHERE e.ManufactorerId=@manufactorerId " +
 
-                     "AND 1=1 ";
+                //     "AND 1=1 ";
+                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price, " +
+                       "e.CatagoryId, e.ManufactorerId, d.CatagoryName, m.ManufactorerName, " +
+                       "discount.DiscountId, discount.DiscountPercent, discount.StartDate, discount.EndDate " +
+                       "FROM Product e " +
+                       "INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
+                       "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId " +
+                       "LEFT JOIN Discount discount ON e.ProductId = discount.ProductId " +
+                       "WHERE e.ManufactorerId=@manufactorerId AND 1=1 ";
 
 
                 // Sử dụng '%' để thực hiện tìm kiếm một phần của tên
@@ -139,13 +152,34 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return products;
             }
         }
+        public object GetProductSaleByMonthAndYear(int month,int year)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = " SELECT(m.ManufactorerName) AS Hang, SUM(s.Quantity) AS Quantity ," +
+                                 "SUM(p.Price * s.Quantity) AS SalesAmount" +
+                                 " FROM OrderDetail s" +
+               " JOIN Product p ON s.ProductId = p.ProductId " +
+               " JOIN OrderProduct o ON s.OrderId = o.OrderProductId " +
+               " Join Manufactorer m ON p.ManufactorerId = m.ManufactorerId " +
+             "   WHERE YEAR(o.OrderDate) = @year AND MONTH(o.OrderDate) = @month " +
+              "  GROUP BY(m.ManufactorerName)";
+                var parameters = new DynamicParameters();
+                parameters.Add("@year", year);
+                parameters.Add("@month", month);
+
+                var products = SqlConnection.Query<object>(sqlCommand, parameters);
+                return products;
+            }
+        }
         public object GetProductSaleByYear(int year)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT MONTH(o.OrderDate) AS Month,SUM(s.Quantity) AS Quantity " +
-                                 //"SUM(p.Price * s.Quantity) AS SalesAmount " +
+                var sqlCommand = "SELECT MONTH(o.OrderDate) AS Month,SUM(s.Quantity) AS Quantity ," +
+                                 "SUM(p.Price * s.Quantity) AS SalesAmount " +
                                  "FROM OrderDetail s " +
                                  "JOIN Product p ON s.ProductId = p.ProductId " +
                                  "JOIN OrderProduct o ON s.OrderId = o.OrderProductId " +
@@ -157,14 +191,6 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 var products = SqlConnection.Query<object>(sqlCommand,parameters);
                 return products;
             }
-//            SELECT(m.ManufactorerName) AS Hang, SUM(s.Quantity) AS Quantity,
-//       SUM(p.Price * s.Quantity) AS SalesAmount
-//FROM OrderDetail s
-//JOIN Product p ON s.ProductId = p.ProductId
-//JOIN OrderProduct o ON s.OrderId = o.OrderProductId
-//Join Manufactorer m ON p.ManufactorerId = m.ManufactorerId
-//WHERE YEAR(o.OrderDate) = 2024 AND MONTH(o.OrderDate) = 5
-//GROUP BY(m.ManufactorerName)
         }
     }
 }

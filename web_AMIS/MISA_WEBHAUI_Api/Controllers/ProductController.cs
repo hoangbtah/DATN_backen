@@ -153,7 +153,28 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
 
         }
+        [HttpGet("getProductSaleByMonthAndYear/{month}/{year}")]
+        public IActionResult GetProductSaleBYMonthAndYear(int month,int year)
+        {
+            try
+            {
+                var data = _productRepository.GetProductSaleByMonthAndYear(month,year);
 
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+
+        }
 
 
 
