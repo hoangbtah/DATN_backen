@@ -14,12 +14,16 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         /// </summary>
         /// <returns></returns>
         object GetProductAllInfor();
-        object GetProductByManufactorer(Guid manufactorerId, string search, decimal? from, decimal? to, int pagenumber, int pagesize);
-        object GetProductByCatagory(Guid catagoryId);
+        object GetProductByManufactorer(Guid? manufactorerId,Guid? catagoryId, string search, decimal? from, decimal? to, int pagenumber, int pagesize);
+      //  object GetTotalProductByManufactorer(Guid manufactorerId);
 
-        object GetProductSearch(string search,decimal? from, decimal? to, int pagenumber, int pagesize);
+      //  object GetProductByCatagory(Guid catagoryId);
+
+    //    object GetProductSearch(string search,decimal? from, decimal? to, int pagenumber, int pagesize);
         object GetProductSale();
         object GetProductSaleByYear(int year);
         object GetProductSaleByMonthAndYear(int month,int year);
+     //   int GetToTalPages(string search, decimal? from, decimal? to, int pagenumber, int pagesize);
+        //int GetTotal(Guid? manufactorerId, string search, decimal? from, decimal? to, int pagenumber, int pagesize);
     }
 }
