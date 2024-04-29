@@ -23,6 +23,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         object GetProductSale();
         object GetProductSaleByYear(int year);
         object GetProductSaleByMonthAndYear(int month,int year);
+        object GetProduct(Guid productId);
      //   int GetToTalPages(string search, decimal? from, decimal? to, int pagenumber, int pagesize);
         //int GetTotal(Guid? manufactorerId, string search, decimal? from, decimal? to, int pagenumber, int pagesize);
     }

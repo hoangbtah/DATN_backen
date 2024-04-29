@@ -47,44 +47,14 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return HandleException(ex);
             }
         }
-        //[HttpGet("catagory/{catagoryId}/products")]
-        //public IActionResult GetProductByCatagory(Guid catagoryId)
-        //{
-        //    try
-        //    {
-        //        var data = _productRepository.GetProductByCatagory(catagoryId);
-
-        //        return Ok(data);
-
-        //    }
-        //    catch (MISAvalidateException ex)
-        //    {
-
-        //        return HandleMISAException(ex);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return HandleException(ex);
-        //    }
-        //}
-        [HttpGet("manufactorer/products")]
-        public IActionResult GetProductByManufactorer(Guid? manufactorerId,Guid? catagoryId, string? search, decimal? from, decimal? to, int pagenumber, int pagesize)
+        [HttpGet("product/{productId}")]
+        public IActionResult GetProduct(Guid productId)
         {
             try
             {
-                var data = _productRepository.GetProductByManufactorer(manufactorerId, catagoryId, search, from, to, pagenumber, pagesize);
+                var data = _productRepository.GetProduct(productId);
 
                 return Ok(data);
-                //var data = _productRepository.GetProductByManufactorer(manufactorerId, search, from, to, pagenumber, pagesize);
-                //var totalPages = _productRepository.GetTotal(manufactorerId, search, from, to, pagenumber, pagesize); // Số lượng tổng của các bản ghi
-                ////var totalPages = (int)Math.Ceiling((double)totalCount / pagesize); // Tính toán tổng số trang
-
-                //return Ok(new
-                //{
-                //    Data = data,
-                //    TotalPages = totalPages
-                //});
 
             }
             catch (MISAvalidateException ex)
@@ -98,35 +68,29 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return HandleException(ex);
             }
         }
-        //[HttpGet("products/search")]
-        //public IActionResult GetProductSearch(string? search, decimal? from, decimal? to,int pagenumber,int pagesize)
-        //{
-        //    try
-        //    {
 
-        //        //var data = _productRepository.GetProductSearch(search,from,to,pagenumber,pagesize);
-        //        //return Ok(data);
-        //        var data = _productRepository.GetProductSearch(search, from, to, pagenumber, pagesize);
-        //        var totalPages = _productRepository.GetToTalPages(search, from, to, pagenumber, pagesize); // Số lượng tổng của các bản ghi
-        //        //var totalPages = (int)Math.Ceiling((double)totalCount / pagesize); // Tính toán tổng số trang
+        [HttpGet("manufactorer/products")]
+        public IActionResult GetProductByManufactorer(Guid? manufactorerId,Guid? catagoryId, string? search, decimal? from, decimal? to, int pagenumber, int pagesize)
+        {
+            try
+            {
+                var data = _productRepository.GetProductByManufactorer(manufactorerId, catagoryId, search, from, to, pagenumber, pagesize);
 
-        //        return Ok(new
-        //        {
-        //            Data = data,
-        //            TotalPages = totalPages
-        //        });
-        //    }
-        //    catch (MISAvalidateException ex)
-        //    {
+                return Ok(data);
+              
+            }
+            catch (MISAvalidateException ex)
+            {
 
-        //        return HandleMISAException(ex);
-        //    }
-        //    catch (Exception ex)
-        //    {
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
 
-        //        return HandleException(ex);
-        //    }
-        //}
+                return HandleException(ex);
+            }
+        }
+      
         [HttpGet("getProductSale")]
         public IActionResult GetProductSale()
         {
@@ -193,27 +157,7 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
 
         }
-        //[HttpGet("{manufactorerId}/products")]
-        //public IActionResult GetTotalProductByManufactorer(Guid manufactorerId)
-        //{
-        //    try
-        //    {
-        //        var data = _productRepository.GetTotalProductByManufactorer(manufactorerId);
-
-        //        return Ok(data);
-
-        //    }
-        //    catch (MISAvalidateException ex)
-        //    {
-
-        //        return HandleMISAException(ex);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return HandleException(ex);
-        //    }
-        //}
+       
 
 
 
