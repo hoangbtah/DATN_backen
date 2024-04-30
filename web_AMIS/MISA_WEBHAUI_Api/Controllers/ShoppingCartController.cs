@@ -38,13 +38,14 @@ namespace MISA_WEBHAUI_Api.Controllers
                 var cartItem = await _shoppingCartRepository.GetCartByUP(request.UserId, request.ProductId);
                 if (cartItem == null)
                 {
-                    if(product.Quantity > 0) {
+                    if(product.Quantity > request.Quantity) {
                         cartItem = new Cart
                         {
                             CartId = Guid.NewGuid(),
                             ProductId = request.ProductId,
                             ProductName = request.ProductName,
-                            Quantity = 1,
+                            //  Quantity = 1,
+                            Quantity = request.Quantity,
                             Price = request.Price,
                             Image = request.Image,
                             UserId = request.UserId,
@@ -55,14 +56,20 @@ namespace MISA_WEBHAUI_Api.Controllers
                     }
                     else
                     {
-                        return BadRequest("Sản phẩm này đã hết !");
+                        if (product.Quantity == 0)
+                        {
+                            return BadRequest("Rất tiếc sản phẩm này đã hết !");
+
+                        }
+                        return BadRequest("Rất tiếc sản phẩm bạn yêu cầu vượt quá số lượng cung cấp !");
                     }
                 }
                 else
                 {
-                    if (product.Quantity > cartItem.Quantity)
+                    if (product.Quantity >= cartItem.Quantity+request.Quantity)
                     {
-                        cartItem.Quantity++;
+                        // cartItem.Quantity++;
+                        cartItem.Quantity = cartItem.Quantity + request.Quantity;
                         int affectedRows = await _shoppingCartRepository.UpdateShoppingCart(cartItem);
                     }
                     else
@@ -126,7 +133,7 @@ namespace MISA_WEBHAUI_Api.Controllers
                 // Kiểm tra số lượng sửa có vượt quá số lượng sản phẩm có sẵn trong database không
                 if (request.Quantity > product.Quantity)
                 {
-                    return BadRequest("Rất tiếc sản phẩm trong kho không đủ để cung cấp thêm !");
+                    return BadRequest("Rất tiếc sản phẩm bạn yêu cầu vượt quá số lượng cung cấp !");
                 }
 
                 else
