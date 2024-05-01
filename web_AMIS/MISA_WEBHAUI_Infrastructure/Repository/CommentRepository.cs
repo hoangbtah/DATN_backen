@@ -19,7 +19,10 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT * FROM Comment Where ProductId = @ProductId";
+                var sqlCommand = "SELECT c.CommentId, c.ProductId,c.PostDate,c.UserId,c.CommentContent,u.Name ,c.Rating" +
+                    " FROM Comment c INNER JOIN User u " +
+                    "ON c.UserId = u.UserId " +
+                    " Where ProductId = @ProductId";
                 var parameters = new DynamicParameters();
                 parameters.Add("@ProductId", ProductId);
                 var comment = SqlConnection.Query<object>(sqlCommand, parameters);
