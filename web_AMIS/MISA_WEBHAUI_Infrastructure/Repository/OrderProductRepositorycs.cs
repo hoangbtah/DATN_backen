@@ -21,8 +21,8 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 //INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate,Phone,OrderAddress)
                 //VALUES (@OrderProductId,@UserId, @OrderDate,@Phone,@OrderAddress);";
                 string query = @"
-                INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate)
-                VALUES (@OrderProductId,@UserId, @OrderDate);";
+                INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate,Phone,OrderAddress,Receiver)
+                VALUES (@OrderProductId,@UserId, @OrderDate,@Phone,@OrderAddress,@Receiver);";
 
 
                 return await SqlConnection.ExecuteAsync(query, orderProduct);
@@ -33,7 +33,8 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT * FROM OrderProduct e INNER JOIN User d ON e.UserId = d.UserId ";
+                var sqlCommand = "SELECT * FROM OrderProduct e INNER JOIN User d ON e.UserId = d.UserId " +
+                    " ORDER BY e.OrderDate DESC ";
                    
                 var orders = SqlConnection.Query<object>(sqlCommand);
                 return orders;
