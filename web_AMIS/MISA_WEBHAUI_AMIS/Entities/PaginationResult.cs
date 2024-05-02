@@ -10,6 +10,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
     {
         public IEnumerable<T> Data { get; set; }
         public int TotalPages { get; set; }
+        public int total {  get; set; }
     }
  
 }

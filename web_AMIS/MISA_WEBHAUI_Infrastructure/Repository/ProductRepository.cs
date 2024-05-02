@@ -112,7 +112,8 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return new
                 {
                     Data = employees,
-                    TotalPages = totalPages
+                    TotalPages = totalPages,
+                    total=totalCount
                 };
             }
         }
