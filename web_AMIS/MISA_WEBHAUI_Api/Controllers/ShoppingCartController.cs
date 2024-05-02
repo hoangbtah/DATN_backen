@@ -32,13 +32,14 @@ namespace MISA_WEBHAUI_Api.Controllers
         public async Task<ActionResult<Cart>> AddShoppingCart(ProductDto request)
         {
             try
-            {
+            {   //lấy sản phẩm trong database mà người dùng thêm vào giỏ
                 var product = await _shoppingCartRepository.GetProductById(request.ProductId);
-               
+               // kiểm tra xem trong giỏ hàng đã có sản phẩm này chưa
                 var cartItem = await _shoppingCartRepository.GetCartByUP(request.UserId, request.ProductId);
                 if (cartItem == null)
                 {
-                    if(product.Quantity > request.Quantity) {
+                    //nếu sản phẩm chưa có trong giỏ hàng kiểm tra xem số lượng trong kho có lớn hơn số lượng thêm vào không
+                    if(product.Quantity >= request.Quantity) {
                         cartItem = new Cart
                         {
                             CartId = Guid.NewGuid(),
