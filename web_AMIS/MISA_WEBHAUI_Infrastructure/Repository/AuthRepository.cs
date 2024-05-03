@@ -25,6 +25,21 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             }
            
         }
+        public async Task<User> ExamUser(string username, byte[] passwordhand, byte[] passwordsalt)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                string query = "SELECT * FROM User WHERE Name = @username " +
+                    "AND PasswordHash =@passwordHash AND PasswordSalt =@passwordSalt AND Active=1 ";
+                var parameters = new DynamicParameters();
+                parameters.Add("@username", username);
+                parameters.Add("@passwordHash", passwordhand);
+                parameters.Add("@passwordSalt", passwordsalt);
+                return await SqlConnection.QueryFirstOrDefaultAsync<User>(query, parameters);
+            }
+
+        }
 
         public async Task<int> CreateUserAsync(User user)
         {

@@ -29,12 +29,13 @@ namespace MISA_WEBHAUI_Api.Controllers
             try
             {
 
-                    var order  = new OrderProduct
-                    {
+                var order = new OrderProduct
+                {
                         OrderProductId = Guid.NewGuid(),
                         OrderDate = DateTime.Now,
-                        UserId= request.UserId,
+                        UserId = request.UserId,
                         Phone = request.Phone,
+                        Status = 0,
                         OrderAddress = request.OrderAddress,
                         Receiver=request.Receiver
                     };

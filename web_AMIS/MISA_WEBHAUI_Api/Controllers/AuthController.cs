@@ -82,6 +82,13 @@ namespace MISA_WEBHAUI_Api.Controllers
             {
                 return BadRequest("Mật khẩu không đúng.");
             }
+            // kiểm tra tài khoản có đang bị khóa không
+            var userExam = await _authRepository.ExamUser(request.Name, user.PasswordHash, user.PasswordSalt);
+            if (userExam == null)
+            {
+                return BadRequest("Tài khoản đã bị khóa");
+
+            }
 
             // Đăng nhập thành công: tạo và trả về token JWT
             string token = CreateToken(user);
