@@ -91,12 +91,12 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
         }
       
-        [HttpGet("getProductSale")]
-        public IActionResult GetProductSale()
+        [HttpGet("getProductSale/{month}/{year}")]
+        public IActionResult GetProductSale(int month,int year)
         {
             try
             {
-                var data = _productRepository.GetProductSale();
+                var data = _productRepository.GetProductSale(month,year);
 
                 return Ok(data);
 

@@ -118,17 +118,24 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             }
         }
      
-        public object GetProductSale()
+        public object GetProductSale(int month,int year)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT n.ProductId, e.ProductName,e.Quantity,e.Price , m.OrderDate from " +
-                    "OrderDetail n LEFT JOIN Product e ON n.ProductId= e.ProductId " +
-                    "INNER JOIN OrderProduct m ON n.OrderId = m.OrderProductId ";
-                //var parameters = new DynamicParameters();
-                //parameters.Add("@OrderId", orderId);
-                var products = SqlConnection.Query<object>(sqlCommand);
+                //var sqlCommand = "SELECT n.ProductId, e.ProductName,n.Quantity,e.Price from " +
+                //    "OrderDetail n LEFT JOIN Product e ON n.ProductId= e.ProductId " +
+                //    "INNER JOIN OrderProduct m ON n.OrderId = m.OrderProductId ";
+                var sqlCommand = "SELECT n.ProductId, e.ProductName, e.Price,e.Image,h.ManufactorerName, SUM(n.Quantity) AS TotalQuantity " +
+                    "FROM OrderDetail n LEFT JOIN Product e ON n.ProductId = e.ProductId " +
+                    "INNER JOIN OrderProduct m ON n.OrderId = m.OrderProductId " +
+                    "INNER JOIN Manufactorer h ON e.ManufactorerId= h.ManufactorerId " +
+                    "   WHERE YEAR(m.OrderDate) = @year AND MONTH(m.OrderDate) = @month " +
+                    "GROUP BY n.ProductId, e.ProductName, e.Price ,e.Image,h.ManufactorerName ";
+                var parameters = new DynamicParameters();
+                parameters.Add("@year", year);
+                parameters.Add("@month", month);
+                var products = SqlConnection.Query<object>(sqlCommand,parameters);
                 return products;
             }
         }
