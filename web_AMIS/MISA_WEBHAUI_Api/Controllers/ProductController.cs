@@ -68,6 +68,27 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return HandleException(ex);
             }
         }
+        [HttpGet("products/discounted")]
+        public IActionResult GetProductDícount(Guid? manufactorerId, Guid? catagoryId, string? search, decimal? from, decimal? to, int pagenumber, int pagesize)
+        {
+            try
+            {
+                var data = _productRepository.GetProductDiscount(manufactorerId, catagoryId, search, from, to, pagenumber, pagesize);
+
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+        }
 
         [HttpGet("manufactorer/products")]
         public IActionResult GetProductByManufactorer(Guid? manufactorerId,Guid? catagoryId, string? search, decimal? from, decimal? to, int pagenumber, int pagesize)

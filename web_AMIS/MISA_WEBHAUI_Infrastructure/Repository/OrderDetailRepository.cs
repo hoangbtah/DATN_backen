@@ -17,7 +17,11 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT * FROM  OrderDetail WHERE OrderId= @OrderId ";
+                var sqlCommand = "SELECT o.Image,o.Quantity,o.ProductId,o.Price,o.OrderDetailId,p.ProductName,m.ManufactorerName " +
+                    "FROM  OrderDetail o INNER JOIN Product p " +
+                    "ON o.ProductId = p.ProductId INNER JOIN Manufactorer m " +
+                    "ON p.ManufactorerId = m.ManufactorerId " +
+                    "WHERE OrderId= @OrderId ";
                 var parameters = new DynamicParameters();
                 parameters.Add("@OrderId", orderId);
                 var orderDetails = SqlConnection.Query<object>(sqlCommand, parameters);

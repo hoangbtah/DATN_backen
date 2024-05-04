@@ -51,6 +51,71 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return product;
             }
         }
+        public object GetProductDiscount(Guid? manufactorerId, Guid? catagoryId, string search,
+            decimal? from, decimal? to, int pagenumber, int pagesize)
+        {
+
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+
+                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price, " +
+                          "e.CatagoryId, e.ManufactorerId, d.CatagoryName, m.ManufactorerName, " +
+                          "discount.DiscountId, discount.DiscountPercent, discount.StartDate, discount.EndDate " +
+                          "FROM Product e " +
+                          "INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
+                          "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId " +
+                          "LEFT JOIN Discount discount ON e.ProductId = discount.ProductId " +
+                          "WHERE discount.DiscountPercent > 0";
+
+
+                // Sử dụng '%' để thực hiện tìm kiếm một phần của tên
+                var parameters = new DynamicParameters();
+                // Kiểm tra xem manufactorerId có giá trị không
+                if (manufactorerId.HasValue)
+                {
+                    sqlCommand += "AND e.ManufactorerId = @manufactorerId "; // Thêm điều kiện lọc theo manufactorerId
+                    parameters.Add("@manufactorerId", manufactorerId);
+                }
+                if (catagoryId.HasValue)
+                {
+                    sqlCommand += "AND e.CatagoryId = @catagoryId "; // Thêm điều kiện lọc theo manufactorerId
+                    parameters.Add("@catagoryId", catagoryId);
+                }
+                if (!string.IsNullOrEmpty(search))
+                {
+                    sqlCommand += "AND e.ProductName LIKE @productName ";
+                    parameters.Add("@productName", "%" + search + "%");
+                }
+                // Thêm điều kiện lọc theo giá nếu có giá trị từ và đến
+                if (from.HasValue)
+                {
+                    sqlCommand += "AND e.Price >= @from ";
+                    parameters.Add("@from", from.Value);
+                }
+                if (to.HasValue)
+                {
+                    sqlCommand += "AND e.Price <= @to ";
+                    parameters.Add("@to", to.Value);
+                }
+
+
+
+                var employees = SqlConnection.Query<object>(sqlCommand, parameters);
+                int totalCount = employees.AsList().Count;
+                int totalPages = (int)Math.Ceiling((double)totalCount / pagesize);
+                //  return totalPages;
+
+                employees = employees.Skip((pagenumber - 1) * pagesize).Take(pagesize);
+
+                return new
+                {
+                    Data = employees,
+                    TotalPages = totalPages,
+                    total = totalCount
+                };
+            }
+        }
         public object GetProductByManufactorer(Guid? manufactorerId,Guid? catagoryId, string search, 
             decimal? from, decimal? to, int pagenumber, int pagesize) 
         {
