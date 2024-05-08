@@ -15,7 +15,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
 
         Task<User> ExamUser(string username, byte[] storedHash, byte[] storedSalt);
 
-
+        Task UpdateUserAsync(User user);
 
     }
 }

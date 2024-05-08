@@ -7,6 +7,7 @@ using MISA_WEBHAUI_AMIS_Core.Entities;
 using MISA_WEBHAUI_AMIS_Core.Exceptions;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -46,9 +47,10 @@ namespace MISA_WEBHAUI_Api.Controllers
                     Role = request.Role,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    Address=request.Address,
-                    Email=request.Email,
-                    PhoneNumber=request.PhoneNumber
+                    Address = request.Address,
+                    Email = request.Email,
+                    PhoneNumber = request.PhoneNumber,
+                    Active = 1,
                 };
 
                 int affectedRows = await _authRepository.CreateUserAsync(user);
@@ -65,6 +67,38 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
            
         }
+        [HttpPost("changePassword")]
+        [Authorize] // Đảm bảo chỉ người dùng hiện tại mới có quyền thay đổi mật khẩu của mình
+        public async Task<ActionResult> ChangePassword(ChangePasswordDto request)
+        {
+            var user = await _authRepository.GetUserByUsernameAsync(request.Username);
+
+            if (user == null)
+            {
+                return BadRequest("Tên đăng nhập không tồn tại.");
+            }
+
+            // Xác thực mật khẩu cũ
+            bool isOldPasswordValid = await _authRepository.VerifyPasswordHash(request.OldPassword, user.PasswordHash, user.PasswordSalt);
+
+            if (!isOldPasswordValid)
+            {
+                return BadRequest("Mật khẩu cũ không đúng.");
+            }
+
+            // Tạo hash và salt mới cho mật khẩu mới
+            byte[] newPasswordHash, newPasswordSalt;
+            CreatePasswordHash(request.NewPassword, out newPasswordHash, out newPasswordSalt);
+
+            // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+            user.PasswordHash = newPasswordHash;
+            user.PasswordSalt = newPasswordSalt;
+
+            await _authRepository.UpdateUserAsync(user);
+
+            return Ok("Mật khẩu đã được thay đổi thành công.");
+        }
+
 
         [HttpPost("Login")]
         public async Task<ActionResult<string>> Login(UserDto request)

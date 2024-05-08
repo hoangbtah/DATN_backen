@@ -13,6 +13,27 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
 {
     public class AuthRepository:BaseRepository<User>,IAuthRepository
     {
+        public async Task UpdateUserAsync(User user)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                string query = @"
+            UPDATE User
+            SET Name = @Name,
+                PasswordHash = @PasswordHash,
+                PasswordSalt = @PasswordSalt,
+                Role = @Role,
+                Email = @Email,
+                PhoneNumber = @PhoneNumber,
+                Address = @Address,
+                Active = @Active
+            WHERE UserId = @UserId;";
+
+                await SqlConnection.ExecuteAsync(query, user);
+            }
+        }
+
+
         public async Task<User> GetUserByUsernameAsync(string username)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
@@ -47,8 +68,8 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             {
 
                 string query = @"
-                INSERT INTO User (USerId ,Name, PasswordHash, PasswordSalt, Role,Email,PhoneNumber,Address)
-                VALUES (@UserId,@Name, @PasswordHash, @PasswordSalt, @Role,@Email,@PhoneNumber,@Address);";
+                INSERT INTO User (USerId ,Name, PasswordHash, PasswordSalt, Role,Email,PhoneNumber,Address,Active)
+                VALUES (@UserId,@Name, @PasswordHash, @PasswordSalt, @Role,@Email,@PhoneNumber,@Address,@Active);";
 
                 return await SqlConnection.ExecuteAsync(query, user);
             }
