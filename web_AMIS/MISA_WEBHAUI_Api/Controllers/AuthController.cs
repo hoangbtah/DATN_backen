@@ -23,11 +23,13 @@ namespace MISA_WEBHAUI_Api.Controllers
        
         IConfiguration _conficguration;
         IAuthRepository _authRepository;
+        IEmailService _emailService;
         
-        public AuthController(IAuthRepository authRepository,IConfiguration configuration)
+        public AuthController(IAuthRepository authRepository,IConfiguration configuration,IEmailService emailService)
         {
             _conficguration = configuration;
             _authRepository = authRepository;
+            _emailService= emailService;
            
         }
 
@@ -197,5 +199,51 @@ namespace MISA_WEBHAUI_Api.Controllers
         {
             return Ok("my string");
         }
+        /// <summary>
+        /// chúc năng quên mật khẩu
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [HttpPost("forgotPassword")]
+        public async Task<ActionResult> ForgotPassword(string email)
+        {
+            var user = await _authRepository.GetUserByEmailAsync(email);
+
+            // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu chưa
+            if (user == null)
+            {
+                return BadRequest("Email không tồn tại.");
+            }
+
+            // Tạo mật khẩu mới ngẫu nhiên
+            string newPassword = GenerateRandomPassword();
+
+            // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+            byte[] newPasswordHash, newPasswordSalt;
+            CreatePasswordHash(newPassword, out newPasswordHash, out newPasswordSalt);
+            user.PasswordHash = newPasswordHash;
+            user.PasswordSalt = newPasswordSalt;
+            await _authRepository.UpdateUserAsync(user);
+
+            // Gửi email chứa mật khẩu mới đến địa chỉ email của người dùng
+            await _emailService.SendResetPasswordEmailAsync(email, newPassword);
+
+            return Ok("Mật khẩu mới đã được gửi đến email của bạn.");
+        }
+
+        private string GenerateRandomPassword()
+        {
+            // Tạo một mật khẩu ngẫu nhiên có độ dài mong muốn
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder newPassword = new StringBuilder();
+            Random random = new Random();
+            for (int i = 0; i < 6; i++)
+            {
+                newPassword.Append(chars[random.Next(chars.Length)]);
+            }
+            return newPassword.ToString();
+        }
+
+
     }
 }

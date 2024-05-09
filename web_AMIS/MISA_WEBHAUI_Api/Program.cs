@@ -5,6 +5,8 @@ using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
 using MISA_WEBHAUI_AMIS_Core.Services;
 using MISA_WEBHAUI_Infrastructure.Repository;
 using System.Text;
+using System.Net.Mail;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +18,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // xử lý DI
+builder.Services.AddTransient<SmtpClient>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+builder.Services.AddScoped<IEmailService,EmailService>();
 builder.Services.AddScoped<ICommentRepository,CommentRepository>();
 builder.Services.AddScoped<ICommentService,CommentService>();
 builder.Services.AddScoped<IEmployeeService,EmployeeService>();
@@ -31,6 +37,8 @@ builder.Services.AddScoped<IOrderProductRepository,OrderProductRepositorycs>();
 builder.Services.AddScoped<IOrderProductService, OrderProductService>();
 builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+//builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 
 // Xử lý cros policy

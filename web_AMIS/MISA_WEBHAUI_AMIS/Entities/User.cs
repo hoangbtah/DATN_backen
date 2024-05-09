@@ -16,6 +16,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         public byte[] PasswordSalt { get; set; }
         public string Role { get; set; } = string.Empty;
         public string PhoneNumber { get; set; }
-        public int Active { get; set; } 
+        public int Active { get; set; }
+        //public string ResetPasswordToken { get; set; } // Thêm trường ResetPasswordToken
     }
 }

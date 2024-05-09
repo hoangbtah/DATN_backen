@@ -13,6 +13,11 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
 {
     public class AuthRepository:BaseRepository<User>,IAuthRepository
     {
+        /// <summary>
+        /// Cập nhật thông tin người dùng
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task UpdateUserAsync(User user)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
@@ -32,7 +37,11 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 await SqlConnection.ExecuteAsync(query, user);
             }
         }
-
+        /// <summary>
+        /// lấy thông tin người dùng theo tên
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
@@ -46,6 +55,31 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             }
            
         }
+        /// <summary>
+        /// lấy người dùng theo email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                string query = "SELECT * FROM User WHERE Email = @email";
+                var parameters = new DynamicParameters();
+                parameters.Add("@email", email);
+                return await SqlConnection.QueryFirstOrDefaultAsync<User>(query, parameters);
+            }
+
+        }
+        /// <summary>
+        /// kiểm tra người dùng theo tên và mật khẩu
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="passwordhand"></param>
+        /// <param name="passwordsalt"></param>
+        /// <returns></returns>
         public async Task<User> ExamUser(string username, byte[] passwordhand, byte[] passwordsalt)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
@@ -61,7 +95,11 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             }
 
         }
-
+        /// <summary>
+        /// thêm mới người dùng
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<int> CreateUserAsync(User user)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
@@ -74,7 +112,13 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return await SqlConnection.ExecuteAsync(query, user);
             }
         }
-
+        /// <summary>
+        /// xác thực mật khẩu người dùng
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="passwordhand"></param>
+        /// <param name="passwordsalt"></param>
+        /// <returns></returns>
         public async Task<bool> VerifyPasswordHash(string password, byte[] passwordhand, byte[] passwordsalt)
         {
             using (var hmac = new HMACSHA512(passwordsalt))
@@ -83,9 +127,32 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return comptedHash.SequenceEqual(passwordhand);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="resetToken"></param>
+        /// <returns></returns>
+        public async Task SaveResetPasswordTokenAsync(Guid userId, string resetToken)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                string query = @"
+            UPDATE User
+            SET ResetPasswordToken = @resetToken
+            WHERE UserId = @userId;";
 
-        
+                var parameters = new DynamicParameters();
+                parameters.Add("@resetToken", resetToken);
+                parameters.Add("@userId", userId);
+
+                await SqlConnection.ExecuteAsync(query, parameters);
+            }
+        }
+
+
+
     }
 
- 
+
 }
