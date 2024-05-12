@@ -18,6 +18,8 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
      
         object GetProductSale(int month,int year);
         object GetProductSaleByStartAndEnd(DateTime startDate, DateTime endDate);
+        object GetProductSaleByStartAndEndPie(DateTime startDate, DateTime endDate);
+
         object GetProductSaleByYear(int year);
         object GetProductSaleByMonthAndYear(int month,int year);
         object GetProduct(Guid productId);
