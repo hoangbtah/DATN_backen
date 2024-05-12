@@ -32,7 +32,8 @@ namespace MISA_WEBHAUI_AMIS_Core.Services
         {
             //string resetUrl = $"https://yourwebsite.com/resetpassword?token={resetToken}";
             //string body = $"Vui lòng nhấp vào <a href='{resetUrl}'>đây</a> để đặt lại mật khẩu.";
-            string body = $"Mật khẩu mới cho tài khoản của bạn là {newPassword}";
+            string body = $"Mật khẩu mới cho tài khoản của bạn là {newPassword} vui lòng không cung cấp cho bất kì ai." +
+                $"Để nâng cao bảo mật bạn hãy thay đổi mật khẩu sau lần đăng nhập đầu tiên .";
 
             var message = new MailMessage("your@email.com", email, "Mật khẩu mới", body);
             message.IsBodyHtml = true;

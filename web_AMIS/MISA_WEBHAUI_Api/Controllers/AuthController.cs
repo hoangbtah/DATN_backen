@@ -205,9 +205,9 @@ namespace MISA_WEBHAUI_Api.Controllers
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpPost("forgotPassword")]
-        public async Task<ActionResult> ForgotPassword(string email)
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordDto request)
         {
-            var user = await _authRepository.GetUserByEmailAsync(email);
+            var user = await _authRepository.GetUserByEmailAsync(request.Email);
 
             // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu chưa
             if (user == null)
@@ -226,9 +226,9 @@ namespace MISA_WEBHAUI_Api.Controllers
             await _authRepository.UpdateUserAsync(user);
 
             // Gửi email chứa mật khẩu mới đến địa chỉ email của người dùng
-            await _emailService.SendResetPasswordEmailAsync(email, newPassword);
+            await _emailService.SendResetPasswordEmailAsync(request.Email, newPassword);
 
-            return Ok("Mật khẩu mới đã được gửi đến email của bạn.");
+            return Ok("Vui lòng kiểm tra tài khoản Email .Mật khẩu mới đã được gửi đến email của bạn.");
         }
 
         private string GenerateRandomPassword()

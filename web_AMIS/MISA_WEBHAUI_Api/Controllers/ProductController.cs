@@ -178,7 +178,35 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
 
         }
-       
+        [HttpGet("getProductSaleByStartAndEnd/{start}/{end}")]
+        public IActionResult GetProductSaleByStartAndEnd(string start, string end)
+        {
+           
+            try
+            {
+                if (!DateTime.TryParse(start, out DateTime startDate) ||
+                !DateTime.TryParse(end, out DateTime endDate))
+                {
+                    return BadRequest("Invalid date format");
+                }
+                var data = _productRepository.GetProductSaleByStartAndEnd(startDate, endDate);
+
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+
+        }
+
 
 
 
