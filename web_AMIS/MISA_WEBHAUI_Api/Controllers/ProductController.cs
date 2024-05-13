@@ -187,9 +187,65 @@ namespace MISA_WEBHAUI_Api.Controllers
                 if (!DateTime.TryParse(start, out DateTime startDate) ||
                 !DateTime.TryParse(end, out DateTime endDate))
                 {
-                    return BadRequest("Invalid date format");
+                    return BadRequest("Dữ liệu nhập vào không hợp lên");
                 }
                 var data = _productRepository.GetProductSaleByStartAndEnd(startDate, endDate);
+
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+
+        }
+        [HttpGet("getProductSaleByStartAndEndPie/{start}/{end}")]
+        public IActionResult GetProductSaleByStartAndEndPie(string start, string end)
+        {
+
+            try
+            {
+                if (!DateTime.TryParse(start, out DateTime startDate) ||
+                !DateTime.TryParse(end, out DateTime endDate))
+                {
+                    return BadRequest("Dữ liệu nhập vào không hợp lệ");
+                }
+                var data = _productRepository.GetProductSaleByStartAndEndPie(startDate, endDate);
+
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+
+        }
+        [HttpGet("getProductSaleStatis/{start}/{end}")]
+        public IActionResult GetProductsSaleStatis(string start, string end)
+        {
+
+            try
+            {
+                if (!DateTime.TryParse(start, out DateTime startDate) ||
+                !DateTime.TryParse(end, out DateTime endDate))
+                {
+                    return BadRequest("Dữ liệu nhập vào không hợp lệ");
+                }
+                var data = _productRepository.GetProductsSaleByStartAndEnd(startDate, endDate);
 
                 return Ok(data);
 

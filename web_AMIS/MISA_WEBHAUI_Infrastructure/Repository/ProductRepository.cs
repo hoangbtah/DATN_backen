@@ -182,19 +182,25 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 };
             }
         }
-     
+     /// <summary>
+     /// lấy danh sach sản phẩm bán được theo tháng và năm
+     /// </summary>
+     /// <param name="month"></param>
+     /// <param name="year"></param>
+     /// <returns></returns>
         public object GetProductSale(int month,int year)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-              
+
                 var sqlCommand = "SELECT n.ProductId, e.ProductName, e.Price,e.Image,h.ManufactorerName, SUM(n.Quantity) AS TotalQuantity " +
                     "FROM OrderDetail n LEFT JOIN Product e ON n.ProductId = e.ProductId " +
                     "INNER JOIN OrderProduct m ON n.OrderId = m.OrderProductId " +
                     "INNER JOIN Manufactorer h ON e.ManufactorerId= h.ManufactorerId " +
                     "   WHERE YEAR(m.OrderDate) = @year AND MONTH(m.OrderDate) = @month " +
-                    "GROUP BY n.ProductId, e.ProductName, e.Price ,e.Image,h.ManufactorerName ";
+                    "GROUP BY n.ProductId, e.ProductName, e.Price ,e.Image,h.ManufactorerName " +
+                    "ORDER BY TotalQuantity DESC, e.Price DESC "; // Sắp xếp giảm dần theo số lượng, nếu số lượng bằng nhau thì sắp xếp giảm dần theo đơn giá;
                 var parameters = new DynamicParameters();
                 parameters.Add("@year", year);
                 parameters.Add("@month", month);
@@ -203,13 +209,38 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             }
         }
         /// <summary>
-        /// lấy thông kế theo năm ,tháng
+        /// lấy danh sách sản phẩm bán được theo 1 khoang thời gian
         /// </summary>
-        /// <param name="month"></param>
-        /// <param name="year"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
         /// <returns></returns>
-      
-       
+        public object GetProductsSaleByStartAndEnd(DateTime startDate, DateTime endDate)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+                if (startDate == endDate || startDate.AddDays(1) == endDate) // Nếu ngày bắt đầu và kết thúc trùng nhau
+                {
+                    endDate = endDate.AddDays(1); // Tăng ngày kết thúc lên 1 ngày
+
+                }
+
+                var sqlCommand = "SELECT n.ProductId, e.ProductName, e.Price,e.Image,h.ManufactorerName, SUM(n.Quantity) AS TotalQuantity " +
+                    "FROM OrderDetail n LEFT JOIN Product e ON n.ProductId = e.ProductId " +
+                    "INNER JOIN OrderProduct m ON n.OrderId = m.OrderProductId " +
+                    "INNER JOIN Manufactorer h ON e.ManufactorerId= h.ManufactorerId " +
+                    "WHERE m.OrderDate >= @start AND m.OrderDate < @end " +
+                    "GROUP BY n.ProductId, e.ProductName, e.Price ,e.Image,h.ManufactorerName " +
+                    "ORDER BY TotalQuantity DESC, e.Price DESC "; // Sắp xếp giảm dần theo số lượng, nếu số lượng bằng nhau thì sắp xếp giảm dần theo đơn giá;
+                var parameters = new DynamicParameters();
+                parameters.Add("@start", startDate);
+                parameters.Add("@end", endDate);
+                var products = SqlConnection.Query<object>(sqlCommand, parameters);
+                return products;
+            }
+        }
+
+
+
         /// <summary>
         /// lay thống kê theo khoảng thời gina truyền va
         /// </summary>
@@ -261,7 +292,12 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return products;
             }
         }
-
+        /// <summary>
+        /// lấy thông kê theo biểu đồ cột của khoảng thời gian
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
         public object GetProductSaleByStartAndEnd(DateTime startDate, DateTime endDate)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
@@ -309,10 +345,21 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return result;
             }
         }
+        /// <summary>
+        /// lấy thông kê theo biểu đồ tròn của các hãng
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
         public object GetProductSaleByStartAndEndPie(DateTime startDate, DateTime endDate)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
+                if (startDate == endDate || startDate.AddDays(1) == endDate) // Nếu ngày bắt đầu và kết thúc trùng nhau
+                {
+                    endDate = endDate.AddDays(1); // Tăng ngày kết thúc lên 1 ngày
+
+                }
 
                 var sqlCommand = " SELECT(m.ManufactorerName) AS Hang, SUM(s.Quantity) AS Quantity ," +
                                  "SUM(p.Price * s.Quantity) AS SalesAmount" +

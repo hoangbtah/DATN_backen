@@ -17,6 +17,8 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         object GetProductByManufactorer(Guid? manufactorerId,Guid? catagoryId, string search, decimal? from, decimal? to, int pagenumber, int pagesize);
      
         object GetProductSale(int month,int year);
+        object GetProductsSaleByStartAndEnd(DateTime startDate, DateTime endDate);
+
         object GetProductSaleByStartAndEnd(DateTime startDate, DateTime endDate);
         object GetProductSaleByStartAndEndPie(DateTime startDate, DateTime endDate);
 
