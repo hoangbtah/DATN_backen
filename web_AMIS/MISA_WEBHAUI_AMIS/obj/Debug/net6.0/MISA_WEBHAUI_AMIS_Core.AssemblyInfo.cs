@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MISA_WEBHAUI_AMIS_Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e5947e75870f720505ed1186a9cfc99bff917849")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6c0f84d8d1388aae2a4eaa743dffd4204c2dd6c")]
 [assembly: System.Reflection.AssemblyProductAttribute("MISA_WEBHAUI_AMIS_Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MISA_WEBHAUI_AMIS_Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
