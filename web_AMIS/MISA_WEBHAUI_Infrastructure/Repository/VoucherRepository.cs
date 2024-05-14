@@ -18,21 +18,26 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
                 string query = @"
-            INSERT INTO Voucher (VoucherId, StartDateVoucher, EndDateVoucher, PercentVoucher,
-            MaxximumUse, StartPrice, EndPrice, DecriptionUse)
-            VALUES (@VoucherId, @StartDateVoucher, @EndDateVoucher, @PercentVoucher, @MaxximumUse
-            , @StartPrice, @EndPrice, @DecriptionUse);
+            INSERT INTO Voucher (VoucherId,VoucherCode, StartDateVoucher, EndDateVoucher, PercentVoucher,
+            MaxximumUse, StartPrice, EndPrice, DecriptionUse,DiscountMoney,CreateDate)
+            VALUES (@VoucherId,@VoucherCode, @StartDateVoucher, @EndDateVoucher, @PercentVoucher, @MaxximumUse
+            , @StartPrice, @EndPrice, @DecriptionUse,@DiscountMoney,@CreateDate);
 
             INSERT INTO UserVoucher (UserVoucherId, UserID, VoucherID)
             SELECT UUID(), u.UserID, v.VoucherID
             FROM User u
             CROSS JOIN Voucher v
-            WHERE v.VoucherId = @VoucherId;";
+            WHERE v.VoucherCode = @VoucherCode;";
 
 
                 return await SqlConnection.ExecuteAsync(query, voucher);
             }
         }
+        /// <summary>
+        /// lấy voucher của người dùng theo mã người dùng
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public object getVoucherByUser(Guid userId)
         {
             using (SqlConnection = new MySqlConnection(ConnectString))
@@ -41,7 +46,8 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 var sqlCommand = "select * from User Inner Join UserVoucher "+
                                " On User.UserId = UserVoucher.UserId Inner Join Voucher "+
                               "  On UserVoucher.VoucherId = Voucher.VoucherId " +
-                              "  Where User.UserId = @userId ";
+                              "  Where User.UserId = @userId " +
+                              "ORDER BY Voucher.CreateDate DESC";
                 var parameters = new DynamicParameters();
                 parameters.Add("@userId", userId);
 
@@ -49,5 +55,25 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return vouchers;
             }
         }
+        /// <summary>
+        /// lấy thông tin của voucher
+        /// </summary>
+        /// <param name="voucherCode"></param>
+        /// <returns></returns>
+        public object getVoucherByVoucherCode(string voucherCode)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = "select * from Voucher  " +
+                              "  Where VoucherCode = @voucherCode ";
+                var parameters = new DynamicParameters();
+                parameters.Add("@voucherCode", voucherCode);
+
+                var voucher = SqlConnection.QueryFirstOrDefault<object>(sqlCommand, parameters);
+                return voucher;
+            }
+        }
+
     }
 }

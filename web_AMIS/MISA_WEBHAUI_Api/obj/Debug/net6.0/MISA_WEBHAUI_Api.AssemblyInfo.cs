@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MISA_WEBHAUI_Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e458c59cd574e3d957826d4ebd0e1d86d2fd4d1a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc28713d8993c4e982ffba627b87182a3491d6a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("MISA_WEBHAUI_Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MISA_WEBHAUI_Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

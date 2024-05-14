@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MISA_WEBHAUI_AMIS_Core.Entities;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure;
 using MISA_WEBHAUI_AMIS_Core.Interfaces.Services;
+using MISA_WEBHAUI_AMIS_Core.Services;
+using System.Text;
 
 namespace MISA_WEBHAUI_Api.Controllers
 {
@@ -18,14 +20,17 @@ namespace MISA_WEBHAUI_Api.Controllers
         //}
         IVoucherRepository _orderProductRepository;
         IVoucherService _orderProductService;
+        IEmailService _emailService;
+        IAuthRepository _authRepository;
 
         public VoucherController(IVoucherRepository orderProductRepository,
-            IVoucherService orderProductService)
+            IVoucherService orderProductService, IEmailService emailService, IAuthRepository authRepository)
             : base(orderProductRepository, orderProductService)
         {
             _orderProductRepository = orderProductRepository;
             _orderProductService = orderProductService;
-
+            _emailService = emailService;
+            _authRepository = authRepository;
         }
         #endregion
 
@@ -35,25 +40,39 @@ namespace MISA_WEBHAUI_Api.Controllers
         {
             try
             {
-
+                string newVoucherCode = GenerateRandomVoucherCode();
                 var voucher = new Voucher
                 {
                     VoucherId = Guid.NewGuid(),
+                    VoucherCode= newVoucherCode,
                     StartDateVoucher = request.StartDateVoucher,
                     EndDateVoucher = request.EndDateVoucher,
                     PercentVoucher = request.PercentVoucher,
                     DecriptionUse = request.DecriptionUse,
                     MaxximumUse = request.MaxximumUse,
                     StartPrice = request.StartPrice,
-                    EndPrice=request.EndPrice
+                    EndPrice=request.EndPrice,
+                    DiscountMoney= request.DiscountMoney,
+                    CreateDate= DateTime.Now
                 };
+                // lấy ra email của tất cả người dùng
+
 
                 int affectedRows = await _orderProductRepository.CreateVoucher(voucher);
 
+                //if (affectedRows > 0)
+                //{
+                //    // Lấy danh sách email của tất cả người dùng
+                //    var userEmails = await _authRepository.GetAllUserEmails();
 
-                //  var data = _shoppingCartRepository.GetCartByUserId(request.UserId);
+                //    // Gửi email voucher cho tất cả người dùng
+                //    foreach (var email in userEmails)
+                //    {
+                //        await _emailService.SendVoucher(voucher, email);
+                //    }
+                //}
 
-                //  return Ok(data);
+
                 return StatusCode(200, voucher);
 
             }
@@ -87,6 +106,42 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return StatusCode(500, ex.Message);
             }
 
+        }
+        [HttpGet("voucherbyVoucherCode/{voucherCode}")]
+        public IActionResult GetVoucherByVoucherCode(string voucherCode)
+        {
+            try
+            {
+
+                var data = _orderProductRepository.getVoucherByVoucherCode(voucherCode);
+               
+
+
+                //  var data = _shoppingCartRepository.GetCartByUserId(request.UserId);
+
+                return Ok(data);
+                //return StatusCode(200, voucher);
+
+            }
+
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+        private string GenerateRandomVoucherCode()
+        {
+            // Tạo một mật khẩu ngẫu nhiên có độ dài mong muốn
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder newPassword = new StringBuilder();
+            Random random = new Random();
+            for (int i = 0; i < 8; i++)
+            {
+                newPassword.Append(chars[random.Next(chars.Length)]);
+            }
+            return newPassword.ToString();
         }
 
         #endregion

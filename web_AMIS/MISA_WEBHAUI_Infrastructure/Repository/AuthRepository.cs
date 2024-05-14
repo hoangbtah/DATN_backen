@@ -149,6 +149,22 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 await SqlConnection.ExecuteAsync(query, parameters);
             }
         }
+        public async Task<List<string>> GetAllUserEmails()
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                //var sqlCommand = "SELECT Email " +
+                //    "from User";
+
+                //var emails = SqlConnection.Query<string>(sqlCommand);
+                //return await emails.ToList();
+                await SqlConnection.OpenAsync();
+                var sqlCommand = "SELECT Email FROM User";
+                var emails = await SqlConnection.QueryAsync<string>(sqlCommand);
+                return emails.ToList();
+            }
+        }
 
 
 

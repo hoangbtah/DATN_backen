@@ -21,5 +21,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
 
         Task SaveResetPasswordTokenAsync(Guid userId, string resetToken);
 
+        Task<List<string>> GetAllUserEmails();
+
     }
 }

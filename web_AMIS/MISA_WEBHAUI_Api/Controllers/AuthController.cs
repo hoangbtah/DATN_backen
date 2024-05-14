@@ -25,6 +25,8 @@ namespace MISA_WEBHAUI_Api.Controllers
         IAuthRepository _authRepository;
         IEmailService _emailService;
         
+        
+        
         public AuthController(IAuthRepository authRepository,IConfiguration configuration,IEmailService emailService)
         {
             _conficguration = configuration;
