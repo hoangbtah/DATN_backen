@@ -16,5 +16,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         public string Receiver { get;set; }
         public string Phone { get; set; }
         public string OrderAddress { get; set; }
+        public int Payment {  get; set; }
+        public int StatusPayment { get; set; }
     }
 }
