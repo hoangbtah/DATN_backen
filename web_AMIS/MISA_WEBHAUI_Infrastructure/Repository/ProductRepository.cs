@@ -20,7 +20,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price, " +
+                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price,e.ProductSize, " +
                          "e.CatagoryId, e.ManufactorerId, d.CatagoryName, m.ManufactorerName, " +
                          "discount.DiscountId, discount.DiscountPercent, discount.StartDate, discount.EndDate " +
                          "FROM Product e " +
@@ -37,7 +37,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price, " +
+                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price,e.ProductSize, " +
                          "e.CatagoryId, e.ManufactorerId, d.CatagoryName, m.ManufactorerName, " +
                          "discount.DiscountId, discount.DiscountPercent, discount.StartDate, discount.EndDate " +
                          "FROM Product e " +
@@ -59,7 +59,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             {
 
 
-                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price, " +
+                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price,e.ProductSize, " +
                           "e.CatagoryId, e.ManufactorerId, d.CatagoryName, m.ManufactorerName, " +
                           "discount.DiscountId, discount.DiscountPercent, discount.StartDate, discount.EndDate " +
                           "FROM Product e " +
@@ -124,7 +124,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             {
 
                
-                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price, " +
+                var sqlCommand = "SELECT e.ProductId, e.ProductName, e.Image, e.Quantity, e.Description, e.Price,e.ProductSize, " +
                        "e.CatagoryId, e.ManufactorerId, d.CatagoryName, m.ManufactorerName, " +
                        "discount.DiscountId, discount.DiscountPercent, discount.StartDate, discount.EndDate " +
                        "FROM Product e " +

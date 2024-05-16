@@ -26,7 +26,7 @@ namespace MISA_WEBHAUI_Api.Controllers
             string vnp_Returnurl = _configuration["VNPAY:ReturnUrl"];
 
             //var vnp_TxnRef = request.OrderId;
-            var vnp_TxnRef = DateTime.Now.Ticks;
+            var vnp_TxnRef = request.OrderId;
             //  var vnp_OrderInfo = request.OrderInfo;
             var vnp_OrderInfo = $"Thanh toan don hang thoi gian: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}";
             var vnp_OrderType = "billpayment";
@@ -64,7 +64,7 @@ namespace MISA_WEBHAUI_Api.Controllers
             vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other
 
             vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
-            vnpay.AddRequestData("vnp_TxnRef", vnp_TxnRef.ToString()); // Mã tham chiếu của giao dịch tại hệ thống của merchant. Mã này là duy nhất dùng để phân biệt các đơn hàng gửi sang VNPAY. Không được trùng lặp trong ngày
+            vnpay.AddRequestData("vnp_TxnRef", vnp_TxnRef); // Mã tham chiếu của giao dịch tại hệ thống của merchant. Mã này là duy nhất dùng để phân biệt các đơn hàng gửi sang VNPAY. Không được trùng lặp trong ngày
 
             //Add Params of 2.1.0 Version
             //Billing

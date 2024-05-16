@@ -37,7 +37,10 @@ namespace MISA_WEBHAUI_Api.Controllers
                         Phone = request.Phone,
                         Status = 0,
                         OrderAddress = request.OrderAddress,
-                        Receiver=request.Receiver
+                        Receiver=request.Receiver,
+                        Payment=request.Payment,
+                        OrderTotal=request.OrderTotal,
+                        StatusPayment=0
                     };
 
                     int affectedRows = await _orderProductRepository.CreateOrder(order);

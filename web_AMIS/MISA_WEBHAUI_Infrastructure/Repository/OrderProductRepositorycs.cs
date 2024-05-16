@@ -21,8 +21,10 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 //INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate,Phone,OrderAddress)
                 //VALUES (@OrderProductId,@UserId, @OrderDate,@Phone,@OrderAddress);";
                 string query = @"
-                INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate,Phone,OrderAddress,Receiver,Status)
-                VALUES (@OrderProductId,@UserId, @OrderDate,@Phone,@OrderAddress,@Receiver,@Status);";
+                INSERT INTO OrderProduct (OrderProductId,UserId, OrderDate,Phone,
+                OrderAddress,Receiver,Status,Payment,OrderTotal,StatusPayment)
+                VALUES (@OrderProductId,@UserId, @OrderDate,@Phone,@OrderAddress,@Receiver,
+                @Status,@Payment,@OrderTotal,@StatusPayment);";
 
 
                 return await SqlConnection.ExecuteAsync(query, orderProduct);

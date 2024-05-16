@@ -14,6 +14,7 @@ namespace MISA_WEBHAUI_AMIS_Core.Entities
         public int Quantity { get; set; }
         public string? Description { get; set; }
         public decimal Price { get; set; }
+        public int ProductSize { get; set; }
         public Guid CatagoryId { get; set; }
         public Guid ManufactorerId { get; set; }
     }
