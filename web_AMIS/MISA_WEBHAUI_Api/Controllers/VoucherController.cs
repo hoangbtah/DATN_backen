@@ -60,17 +60,17 @@ namespace MISA_WEBHAUI_Api.Controllers
 
                 int affectedRows = await _orderProductRepository.CreateVoucher(voucher);
 
-                //if (affectedRows > 0)
-                //{
-                //    // Lấy danh sách email của tất cả người dùng
-                //    var userEmails = await _authRepository.GetAllUserEmails();
+                if (affectedRows > 0)
+                {
+                    // Lấy danh sách email của tất cả người dùng
+                    var userEmails = await _authRepository.GetAllUserEmails();
 
-                //    // Gửi email voucher cho tất cả người dùng
-                //    foreach (var email in userEmails)
-                //    {
-                //        await _emailService.SendVoucher(voucher, email);
-                //    }
-                //}
+                    // Gửi email voucher cho tất cả người dùng
+                    foreach (var email in userEmails)
+                    {
+                        await _emailService.SendVoucher(voucher, email);
+                    }
+                }
 
 
                 return StatusCode(200, voucher);
