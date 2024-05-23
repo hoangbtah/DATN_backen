@@ -12,5 +12,6 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
         Task<int> CreateVoucher(Voucher voucher);
         object getVoucherByUser(Guid userId);
         object getVoucherByVoucherCode(string voucherCode);
+        object getVoucher();
     }
 }

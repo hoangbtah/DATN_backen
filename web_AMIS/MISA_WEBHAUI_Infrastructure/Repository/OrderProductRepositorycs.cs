@@ -42,5 +42,19 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                 return orders;
             }
         }
+        public object GetOrderByUserId(Guid userId)
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = "SELECT * FROM OrderProduct e INNER JOIN User d ON e.UserId = d.UserId " +
+                    "WHERE d.UserId=@userId" +
+                    " ORDER BY e.OrderDate DESC ";
+                var parameters = new DynamicParameters();
+                parameters.Add("@userId", userId);
+                var orders = SqlConnection.Query<object>(sqlCommand,parameters);
+                return orders;
+            }
+        }
     }
 }

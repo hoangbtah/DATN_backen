@@ -11,5 +11,6 @@ namespace MISA_WEBHAUI_AMIS_Core.Interfaces.Infrastructure
     {
         Task<int> CreateOrder(OrderProduct orderProduct);
         object GetOrderAllInfor();
+        object GetOrderByUserId(Guid userId);
     }
 }

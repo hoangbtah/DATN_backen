@@ -143,6 +143,29 @@ namespace MISA_WEBHAUI_Api.Controllers
             }
             return newPassword.ToString();
         }
+        [HttpGet("voucher")]
+        public IActionResult GetVoucher()
+        {
+            try
+            {
+
+                var data = _orderProductRepository.getVoucher();
+
+
+                //  var data = _shoppingCartRepository.GetCartByUserId(request.UserId);
+
+                return Ok(data);
+                //return StatusCode(200, voucher);
+
+            }
+
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+
+        }
 
         #endregion
     }

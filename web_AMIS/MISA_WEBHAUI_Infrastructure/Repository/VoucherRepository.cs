@@ -67,10 +67,26 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
 
                 var sqlCommand = "select * from Voucher  " +
                               "  Where VoucherCode = @voucherCode ";
+                            
                 var parameters = new DynamicParameters();
                 parameters.Add("@voucherCode", voucherCode);
 
                 var voucher = SqlConnection.QueryFirstOrDefault<object>(sqlCommand, parameters);
+                return voucher;
+            }
+        }
+        public object getVoucher()
+        {
+            using (SqlConnection = new MySqlConnection(ConnectString))
+            {
+
+                var sqlCommand = "select * from Voucher  " +
+                              " ORDER BY Voucher.CreateDate DESC ";
+
+                var parameters = new DynamicParameters();
+              //  parameters.Add("@voucherCode", voucherCode);
+
+                var voucher = SqlConnection.Query<object>(sqlCommand);
                 return voucher;
             }
         }

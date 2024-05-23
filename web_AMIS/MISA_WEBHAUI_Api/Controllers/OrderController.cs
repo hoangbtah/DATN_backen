@@ -81,5 +81,26 @@ namespace MISA_WEBHAUI_Api.Controllers
                 return HandleException(ex);
             }
         }
+        [HttpGet("orders/{userId}")]
+        public IActionResult GetOrderByUserId(Guid userId)
+        {
+            try
+            {
+                var data = _orderProductRepository.GetOrderByUserId(userId);
+
+                return Ok(data);
+
+            }
+            catch (MISAvalidateException ex)
+            {
+
+                return HandleMISAException(ex);
+            }
+            catch (Exception ex)
+            {
+
+                return HandleException(ex);
+            }
+        }
     }
 }
