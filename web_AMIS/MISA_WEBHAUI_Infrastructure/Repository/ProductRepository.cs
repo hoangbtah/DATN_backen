@@ -66,7 +66,7 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                           "INNER JOIN Catagory d ON e.CatagoryId = d.CatagoryId " +
                           "INNER JOIN Manufactorer m ON e.ManufactorerId = m.ManufactorerId " +
                           "LEFT JOIN Discount discount ON e.ProductId = discount.ProductId " +
-                          "WHERE discount.DiscountPercent > 0";
+                          "WHERE discount.DiscountPercent > 0 ";
 
 
                 // Sử dụng '%' để thực hiện tìm kiếm một phần của tên
