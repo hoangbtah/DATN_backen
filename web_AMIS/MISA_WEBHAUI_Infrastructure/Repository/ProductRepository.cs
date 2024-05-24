@@ -278,14 +278,23 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
             using (SqlConnection = new MySqlConnection(ConnectString))
             {
 
-                var sqlCommand = "SELECT MONTH(o.OrderDate) AS Month,SUM(s.Quantity) AS Quantity ," +
-                                 "SUM(p.Price * s.Quantity) AS SalesAmount " +
-                                 "FROM OrderDetail s " +
-                                 "JOIN Product p ON s.ProductId = p.ProductId " +
-                                 "JOIN OrderProduct o ON s.OrderId = o.OrderProductId " +
-                                 "WHERE YEAR(o.OrderDate) = @year " +
-                                 "GROUP BY MONTH(o.OrderDate)" +
-                                 " ORDER BY Month ";
+                //var sqlCommand = "  WITH OrderTotals AS (SELECT o.OrderProductId, o.OrderDate, o.OrderTotal  " +
+                //    " FROM OrderProduct o   WHERE YEAR(o.OrderDate) = @year),MonthlyTotals AS " +
+                //    "(   SELECT    MONTH(ot.OrderDate) AS Month,       SUM(ot.OrderTotal) AS SalesAmount" +
+                //    "   FROM OrderTotals ot    GROUP BY MONTH(ot.OrderDate)),MonthlyQuantities AS " +
+                //    "(    SELECT   MONTH(o.OrderDate) AS Month,    SUM(s.Quantity) AS Quantity " +
+                //    "  FROM OrderDetail s " +
+                //    "  JOIN OrderProduct o ON s.OrderId = o.OrderProductId  " +
+                //    "  WHERE YEAR(o.OrderDate) = @year  " +
+                //    "  GROUP BY MONTH(o.OrderDate)) SELECT " +
+                //    "    q.Month,   q.Quantity,    t.SalesAmount FROM MonthlyQuantities q " +
+                //    "JOIN MonthlyTotals t ON q.Month = t.Month " +
+                //    "ORDER BY q.Month ";
+                var sqlCommand = "SELECT MONTH(o.OrderDate) AS Month, SUM(o.OrderTotal) AS SalesAmount " +
+                    "  FROM  OrderProduct o     WHERE YEAR(o.OrderDate) = @year AND o.Status <> 2  " +
+                    " GROUP BY MONTH(o.OrderDate)" +
+                    "   ORDER BY Month ";
+
                 var parameters = new DynamicParameters();
                 parameters.Add("@year", year);
                 var products = SqlConnection.Query<object>(sqlCommand,parameters);
@@ -308,12 +317,11 @@ namespace MISA_WEBHAUI_Infrastructure.Repository
                     
                 }
                 var sqlCommand = "SELECT DATE(o.OrderDate) AS Date, " +
-                                 "SUM(s.Quantity) AS Quantity, " +
-                                 "SUM(p.Price * s.Quantity) AS SalesAmount " +
-                                 "FROM OrderDetail s " +
-                                 "JOIN Product p ON s.ProductId = p.ProductId " +
-                                 "JOIN OrderProduct o ON s.OrderId = o.OrderProductId " +
-                                 "WHERE o.OrderDate >= @startDate AND o.OrderDate < @endDate " + // Sử dụng "<" thay vì "<=" ở điều kiện WHERE
+                                
+                                 "SUM(o.OrderTotal) AS SalesAmount " +
+                                 "FROM OrderProduct o " +
+
+                                 "WHERE o.OrderDate >= @startDate AND o.OrderDate < @endDate AND o.Status <> 2 " + // Sử dụng "<" thay vì "<=" ở điều kiện WHERE
                                  "GROUP BY DATE(o.OrderDate) " +
                                  "ORDER BY Date";
 
